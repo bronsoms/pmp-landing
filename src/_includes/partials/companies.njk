@@ -1,0 +1,88 @@
+<!-- Companies -->
+{% set s = home.es.companies if home else null %}
+{% if s %}{{ s | sbEditable | safe }}{% endif %}
+<section class="companies" id="empresas">
+    <div class="companies-inner">
+        <div class="section-header">
+            <div>
+                <p class="section-label reveal" data-i18n="companies.label">{{ s.label if s else 'Ecosistema' }}</p>
+                <h2 class="section-title reveal reveal-d1" data-i18n="companies.title">{{ s.title if s else 'Nuestra actividad se desarrolla a través de cuatro compañías complementarias' }}</h2>
+            </div>
+            <div class="section-count reveal">{{ '0' + s.cards.length if s and s.cards else '04' }}</div>
+        </div>
+        <div class="companies-grid">
+            {% if s and s.cards %}
+                {% set cardKeys = ['pmp', 'pap', 'studio', 'aparts'] %}
+                {% for card in s.cards %}
+                    {% set delay = loop.index0 %}
+                    <div class="company-card reveal{% if delay > 0 %} reveal-d{{ delay }}{% endif %}">
+                        <div class="company-card-top">
+                            {% if card.logo and card.logo.filename %}
+                                <img src="{{ card.logo.filename }}" alt="{{ card.name }}" class="company-card-logo">
+                            {% else %}
+                                <h3>{{ card.name }}</h3>
+                            {% endif %}
+                            <span class="company-card-number">{{ card.number }}</span>
+                        </div>
+                        {% if card.image and card.image.filename %}
+                            <img src="{{ card.image.filename }}" alt="{{ card.name }}" class="company-card-image">
+                        {% endif %}
+                        <p data-i18n="companies.{{ cardKeys[loop.index0] }}.desc">{{ card.description }}</p>
+                        {% if card.link_text %}
+                            <a href="{{ card.link_url }}" {% if card.link_external %}target="_blank"{% endif %} class="card-link">
+                                <span data-i18n="companies.{{ cardKeys[loop.index0] }}.link">{{ card.link_text }}</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {# Fallback: hardcoded cards #}
+                <div class="company-card reveal">
+                    <div class="company-card-top">
+                        <h3>Grup PMP</h3>
+                        <span class="company-card-number">01</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-3-image-2.jpg" alt="Proyectos Grup PMP" class="company-card-image">
+                    <p data-i18n="companies.pmp.desc">El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
+                </div>
+                <div class="company-card reveal reveal-d1">
+                    <div class="company-card-top">
+                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-casas-logo-black.svg" alt="Prêt-à-porter casas" class="company-card-logo">
+                        <span class="company-card-number">02</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-4-image-1.png" alt="Prêt-à-porter casas" class="company-card-image">
+                    <p data-i18n="companies.pap.desc">Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados.</p>
+                    <a href="https://www.pretaportercasas.com" target="_blank" class="card-link">
+                        <span data-i18n="companies.pap.link">¿Quieres saber más? Entra en la web de Prêt-à-porter casas</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="company-card reveal reveal-d2">
+                    <div class="company-card-top">
+                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-logo-studio.svg" alt="Prêt-à-porter studio" class="company-card-logo">
+                        <span class="company-card-number">03</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-3-image-1.jpg" alt="Prêt-à-porter studio" class="company-card-image">
+                    <p data-i18n="companies.studio.desc">Prêt-à-porter studio es nuestro estudio de interiorismo y decoración.</p>
+                    <a href="#contacto" class="card-link">
+                        <span data-i18n="companies.studio.link">Infórmate o ven a conocer nuestro showroom y compruébalo</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="company-card reveal reveal-d3">
+                    <div class="company-card-top">
+                        <h3>àParts</h3>
+                        <span class="company-card-number">04</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/02/khanvian-section-4-lect-1.jpg" alt="àParts" class="company-card-image">
+                    <p data-i18n="companies.aparts.desc">àParts es la compañía del Grupo PMP que se dedica a establecer alianzas.</p>
+                    <a href="#contacto" class="card-link">
+                        <span data-i18n="companies.aparts.link">Dinos. ¿Qué necesitas?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

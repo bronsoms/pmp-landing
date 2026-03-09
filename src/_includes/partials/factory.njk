@@ -1,0 +1,26 @@
+<!-- Factory -->
+{% set s = home.es.factory if home else null %}
+{% if s %}{{ s | sbEditable | safe }}{% endif %}
+<section class="factory" id="factoria">
+    <div class="factory-inner">
+        <div class="factory-layout">
+            <div class="factory-image-wrapper reveal">
+                {% if s and s.image and s.image.filename %}
+                <img src="{{ s.image.filename }}" alt="Factoría PMP">
+                {% else %}
+                <img src="https://www.pretaportercasas.com/wp-content/uploads/2025/10/IMG_7194.jpeg" alt="Factoría PMP">
+                {% endif %}
+                <div class="factory-badge">
+                    <div class="factory-badge-number">{{ s.badge_number if s else '25.000' }}</div>
+                    <div class="factory-badge-text" data-i18n="factory.badge">{{ s.badge_text if s else 'm² de factoría' }}</div>
+                </div>
+            </div>
+            <div class="factory-content">
+                <p class="section-label reveal" data-i18n="factory.label">{{ s.label if s else 'Nuestra casa' }}</p>
+                <h2 class="factory-title reveal reveal-d1" data-i18n="factory.title">{{ s.title if s else 'Bienvenido a nuestra casa: la Factoría PMP.' }}</h2>
+                <p class="factory-text reveal reveal-d2" data-i18n="factory.text">{{ s.text if s else 'Nuestro sistema constructivo se basa en llevar a cabo casi el 80% del proceso en nuestra fábrica, un complejo de 25.000 m² que funciona como un laboratorio de innovación constante, con la última tecnología y un equipo permanente y muy especializado.' }}</p>
+                <p class="factory-highlight reveal reveal-d3" data-i18n="factory.highlight">{{ s.highlight if s else 'Esto nos permite llevar a cabo un exhaustivo control del proceso de principio a fin, elevando así los estándares de calidad y maximizando la sostenibilidad.' }}</p>
+            </div>
+        </div>
+    </div>
+</section>

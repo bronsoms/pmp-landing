@@ -1,0 +1,21 @@
+<!-- Contact -->
+{% set s = home.es.contact if home else null %}
+{% if s %}{{ s | sbEditable | safe }}{% endif %}
+<section class="contact" id="contacto">
+    <div class="contact-inner">
+        <p class="section-label reveal" data-i18n="contact.label">{{ s.label if s else 'Contacto' }}</p>
+        <h2 class="contact-title reveal reveal-d1" data-i18n-html="contact.title">{% if s %}{{ s.title | safe }}{% else %}Juntos, podemos construir el futuro en prácticamente <em>cualquier lugar.</em>{% endif %}</h2>
+        <div class="contact-divider reveal reveal-d2"></div>
+        <div class="contact-methods reveal reveal-d2">
+            <div class="contact-method">
+                <span class="contact-method-label" data-i18n="contact.phone">{{ s.phone_label if s else 'Teléfono' }}</span>
+                <a href="tel:+34{{ (s.phone if s else '973 603 954') | replace(' ', '') }}">{{ s.phone if s else '973 603 954' }}</a>
+            </div>
+            <div class="contact-method">
+                <span class="contact-method-label">Email</span>
+                <a href="mailto:{{ s.email if s else 'miproyecto@pmp-pretaporter.com' }}">{{ s.email if s else 'miproyecto@pmp-pretaporter.com' }}</a>
+            </div>
+        </div>
+        <p class="contact-cta reveal reveal-d3" data-i18n-html="contact.cta">{% if s %}{{ s.cta | safe }}{% else %}Puedes ampliar información sobre el sistema constructivo Khanvian&reg;, así como descubrir algunos de los más de 500 proyectos que hemos desarrollado, entrando en la <a href="https://www.pretaportercasas.com" target="_blank">web de Prêt-à-porter casas</a>.{% endif %}</p>
+    </div>
+</section>
