@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grup PMP — Construcción Industrializada</title>
+    <meta name="description" content="Grup PMP es una organización pionera en construcción industrializada con más de 25 años de experiencia. Soluciones adaptadas para particulares y profesionales.">
+    <link rel="alternate" hreflang="es" href="?lang=es">
+    <link rel="alternate" hreflang="ca" href="?lang=ca">
+    <link rel="alternate" hreflang="en" href="?lang=en">
+    <link rel="alternate" hreflang="x-default" href="?lang=es">
+    <script>
+        (function(){
+            var p = new URLSearchParams(window.location.search).get('lang');
+            var l = p || localStorage.getItem('pmp-lang') || 'es';
+            if (l !== 'es') document.documentElement.style.opacity = '0';
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fcfcfa;
+            --cream: #f5f3ee;
+            --stone: #e8e4dd;
+            --warm-gray: #9a9590;
+            --mid-gray: #6b6560;
+            --dark-gray: #3a3632;
+            --charcoal: #1e1c1a;
+            --ink: #141210;
+            --accent: #b8a08a;
+            --accent-dark: #8a7560;
+            --font-display: 'Cormorant Garamond', 'Georgia', serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0, 1);
+            --max-w: 1360px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--warm-gray) transparent;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--dark-gray);
+            background: var(--white);
+            line-height: 1.7;
+            font-weight: 400;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 15px;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* ===== GRAIN OVERLAY ===== */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.75rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.5s var(--ease-smooth), padding 0.5s var(--ease-smooth);
+        }
+
+        .nav.scrolled {
+            background: rgba(252,252,250,0.92);
+            backdrop-filter: blur(24px) saturate(1.2);
+            -webkit-backdrop-filter: blur(24px) saturate(1.2);
+            padding: 1rem 2.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .nav-logo {
+            text-decoration: none;
+            color: var(--white);
+            display: block;
+        }
+
+        .nav.scrolled .nav-logo { color: var(--black); }
+
+        .nav-logo-text {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            line-height: 1;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+        }
+
+        .nav.scrolled .nav-logo-text {
+            text-shadow: none;
+        }
+
+        .nav-logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.75;
+            display: block;
+            margin-top: 0.25rem;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+        }
+
+        .nav.scrolled .nav-logo-sub {
+            text-shadow: none;
+            opacity: 0.55;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav.scrolled .nav-links a { color: var(--dark-gray); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.5s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.15rem;
+            align-items: center;
+            margin-left: 1.5rem;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.3rem 0.5rem;
+            position: relative;
+            opacity: 0.5;
+            transition: opacity 0.3s, color 0.3s;
+        }
+
+        .nav.scrolled .lang-btn { color: var(--dark-gray); }
+
+        .lang-btn:hover { opacity: 0.8; }
+
+        .lang-btn.active {
+            opacity: 1;
+        }
+
+        .lang-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .lang-sep {
+            color: var(--white);
+            opacity: 0.2;
+            font-size: 0.7rem;
+            user-select: none;
+        }
+
+        .nav.scrolled .lang-sep { color: var(--dark-gray); }
+
+        .mobile-lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .mobile-lang-switcher .lang-btn {
+            color: var(--white);
+            font-size: 0.85rem;
+            padding: 0.4rem 0.75rem;
+        }
+
+        .mobile-lang-switcher .lang-sep {
+            color: var(--white);
+        }
+
+        .mobile-menu.active .mobile-lang-switcher {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.35s;
+        }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 4px;
+        }
+
+        .nav-hamburger span {
+            width: 26px;
+            height: 1px;
+            background: var(--white);
+            transition: all 0.4s var(--ease-out-expo);
+            transform-origin: center;
+        }
+
+        .nav.scrolled .nav-hamburger span { background: var(--black); }
+
+        .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+        .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--ink);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s var(--ease-smooth);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, color 0.3s;
+        }
+
+        .mobile-menu.active a {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active a:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.active a:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.active a:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-menu.active a:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-menu a:hover { color: var(--accent); }
+
+        .mobile-close {
+            position: absolute;
+            top: 1.75rem;
+            right: 2.5rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-close:hover {
+            background: rgba(255,255,255,0.08);
+            transform: rotate(90deg);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: var(--black);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('assets/frame-08s.jpg') center/cover no-repeat;
+            will-change: transform;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.05) 25%, rgba(10,10,10,0.1) 50%, rgba(10,10,10,0.6) 75%, rgba(10,10,10,0.9) 100%),
+                linear-gradient(90deg, transparent 35%, rgba(10,10,10,0.55) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 2.5rem 4rem;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .hero-title-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 3.6vw, 4rem);
+            color: var(--white);
+            line-height: 1.12;
+            font-weight: 300;
+            text-wrap: balance;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .hero-eyebrow-line {
+            width: 48px;
+            height: 1px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .hero-eyebrow-text {
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            font-weight: 500;
+        }
+
+        .hero-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            width: 100%;
+            align-self: stretch;
+        }
+
+        .hero-stat {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .hero-stat-item {
+            text-align: left;
+        }
+
+        .hero-stat-number {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-top: 0.35rem;
+            font-weight: 500;
+        }
+
+        .hero-scroll {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .hero-scroll-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .hero-scroll:hover .hero-scroll-circle {
+            border-color: var(--accent);
+            background: rgba(184,160,138,0.1);
+        }
+
+        .hero-scroll-circle svg {
+            animation: floatDown 2s ease-in-out infinite;
+        }
+
+        @keyframes floatDown {
+            0%, 100% { transform: translateY(-3px); }
+            50% { transform: translateY(3px); }
+        }
+
+        /* ===== INTRO ===== */
+        .intro {
+            padding: 9rem 2.5rem;
+            background: var(--white);
+            position: relative;
+        }
+
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--stone), transparent);
+        }
+
+        .intro-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.4fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .intro-marker {
+            position: sticky;
+            top: 8rem;
+            padding-top: 0.5rem;
+        }
+
+        .intro-marker img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.6s ease;
+        }
+
+        .intro-marker img:hover {
+            filter: grayscale(0%);
+        }
+
+        .intro-marker-caption {
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid-gray);
+            line-height: 1.6;
+        }
+
+        .intro-marker-caption strong {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            letter-spacing: 0.05em;
+            text-transform: none;
+        }
+
+        .intro-lead {
+            font-family: var(--font-display);
+            font-size: clamp(1.85rem, 3vw, 2.65rem);
+            line-height: 1.32;
+            color: var(--charcoal);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .intro-lead em {
+            font-style: italic;
+            color: var(--accent-dark);
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--mid-gray);
+            line-height: 1.95;
+            max-width: 620px;
+        }
+
+        /* ===== COMPANIES ===== */
+        .companies {
+            padding: 8rem 2.5rem;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .companies::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--stone);
+        }
+
+        .companies-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 400;
+            color: var(--charcoal);
+            line-height: 1.28;
+            max-width: 600px;
+        }
+
+        .section-count {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .company-card {
+            background: var(--white);
+            padding: 2.75rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo);
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.06);
+            border-color: var(--stone);
+        }
+
+        .company-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-card-number {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--warm-gray);
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+        }
+
+        .company-card-logo {
+            height: 48px;
+            object-fit: contain;
+            object-position: left;
+            display: block;
+        }
+
+        .company-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            transition: opacity 0.5s;
+        }
+
+        .company-card:hover .company-card-image { opacity: 1; }
+
+        .company-card h3 {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin: 0;
+            color: var(--charcoal);
+            letter-spacing: -0.01em;
+            line-height: 1;
+        }
+
+        .company-card p {
+            font-size: 1.02rem;
+            color: var(--mid-gray);
+            line-height: 1.85;
+            flex: 1;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--stone);
+            transition: color 0.3s, gap 0.4s var(--ease-out-expo);
+            align-self: stretch;
+        }
+
+        .card-link:hover {
+            color: var(--accent-dark);
+            gap: 1rem;
+        }
+
+        .card-link svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ===== KHANVIAN ===== */
+        .khanvian {
+            padding: 0;
+            background: var(--charcoal);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .khanvian-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 700px;
+        }
+
+        .khanvian-content {
+            padding: 6rem 4rem 6rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 620px;
+            margin-left: auto;
+        }
+
+        .khanvian-content .section-label {
+            color: var(--accent);
+        }
+
+        .khanvian-logo {
+            height: 90px;
+            margin-bottom: 2.5rem;
+            filter: brightness(0) invert(1);
+            align-self: flex-start;
+        }
+
+        .khanvian-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.85rem, 2.8vw, 2.5rem);
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .khanvian-title strong {
+            color: var(--white);
+            font-weight: 400;
+        }
+
+        .khanvian-text {
+            font-size: 1.08rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.95;
+        }
+
+        .khanvian-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .khanvian-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+
+        .khanvian-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .khanvian-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--charcoal) 0%, transparent 35%);
+        }
+
+        .khanvian-image-accent {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 2;
+        }
+
+        .khanvian-tag {
+            padding: 0.55rem 1.25rem;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            font-weight: 500;
+        }
+
+        /* ===== FACTORY ===== */
+        .factory {
+            padding: 9rem 2.5rem;
+            background: var(--white);
+            position: relative;
+        }
+
+        .factory-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+
+        .factory-layout {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .factory-image-wrapper {
+            position: relative;
+        }
+
+        .factory-image-wrapper img {
+            width: 100%;
+            height: 580px;
+            object-fit: cover;
+        }
+
+        .factory-badge {
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            background: var(--charcoal);
+            color: var(--white);
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .factory-badge-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .factory-badge-text {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            margin-top: 0.4rem;
+            font-weight: 500;
+        }
+
+        .factory-content {
+            padding-right: 1rem;
+        }
+
+        .factory-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.85rem, 2.8vw, 2.65rem);
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 2.5rem;
+            color: var(--charcoal);
+        }
+
+        .factory-text {
+            font-size: 1.08rem;
+            color: var(--mid-gray);
+            line-height: 1.95;
+            margin-bottom: 2rem;
+        }
+
+        .factory-highlight {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--charcoal);
+            line-height: 1.65;
+            padding-left: 2rem;
+            border-left: 2px solid var(--accent);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 9rem 2.5rem;
+            background: var(--ink);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184,160,138,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .contact-inner {
+            max-width: 880px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4vw, 3.75rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 3.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .contact-divider {
+            width: 48px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 3.5rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .contact-method-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            font-weight: 600;
+        }
+
+        .contact-method a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .contact-method a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .contact-method a:hover { color: var(--accent); }
+        .contact-method a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        .contact-cta {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-cta a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s;
+        }
+
+        .contact-cta a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 2.25rem 2.5rem;
+            background: var(--black);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-offices {
+            display: flex;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-office {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .footer-office::after {
+            content: '';
+            position: absolute;
+            right: -0.9rem;
+            top: 50%;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .footer-office:last-child::after { display: none; }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s var(--ease-smooth), transform 0.9s var(--ease-smooth);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+        .reveal-d4 { transition-delay: 0.32s; }
+
+        /* Hero entrance animation */
+        .hero-content > * {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroIn 1s var(--ease-out-expo) forwards;
+        }
+
+        .hero-content > *:nth-child(1) { animation-delay: 0.3s; }
+        .hero-content > *:nth-child(2) { animation-delay: 0.8s; }
+
+        @keyframes heroIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 999px) {
+            .nav-links { display: none; }
+            .lang-switcher { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .hero-content { padding: 0 2rem 3rem; }
+            .hero-stat { gap: 2rem; }
+
+            .intro-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .intro-marker { max-width: 200px; }
+
+            .companies-grid { grid-template-columns: 1fr; }
+
+            .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .section-count { font-size: 3rem; }
+
+            .khanvian-inner { grid-template-columns: 1fr; min-height: auto; }
+            .khanvian-content { padding: 5rem 2.5rem; max-width: none; }
+            .khanvian-image { height: 400px; }
+            .khanvian-image-overlay { background: linear-gradient(180deg, var(--charcoal) 0%, transparent 35%); }
+
+            .factory-layout { grid-template-columns: 1fr; gap: 3rem; }
+            .factory-content { padding-right: 0; order: -1; }
+            .factory-image-wrapper img { height: 400px; }
+            .factory-badge { right: 1.5rem; bottom: -1.5rem; }
+
+            .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-offices { justify-content: center; }
+        }
+
+        @media (max-width: 690px) {
+            .nav { padding: 1.25rem 1.5rem; }
+            .nav.scrolled { padding: 1rem 1.5rem; }
+            .mobile-close { right: 1.5rem; top: 1.25rem; }
+
+            .hero-content { padding: 0 1.5rem 2.5rem; align-items: flex-start; }
+            .hero-title-block { max-width: none; }
+            .hero-title { font-size: clamp(2rem, 7vw, 3rem); }
+            .hero-bottom { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .hero-stat { gap: 1.5rem; }
+
+            .intro { padding: 6rem 1.5rem; }
+            .companies { padding: 5rem 1.5rem; }
+            .factory { padding: 5rem 1.5rem; }
+            .contact { padding: 5rem 1.5rem; }
+
+            .company-card { padding: 2rem; }
+            .company-card-image { height: 140px; }
+
+            .contact-methods { flex-direction: column; gap: 2rem; }
+
+            .factory-image-wrapper img { height: 300px; }
+            .factory-badge { padding: 1.25rem 1.5rem; }
+            .factory-badge-number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">
+            <span class="nav-logo-text">Grup PMP</span>
+            <span class="nav-logo-sub" data-i18n="nav.subtitle">Construcción industrializada</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
+            <li><a href="#empresas" data-i18n="nav.companies">Empresas</a></li>
+            <li><a href="#khanvian">Khanvian</a></li>
+            <li><a href="#factoria" data-i18n="nav.factory">Factoría</a></li>
+            <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+        </ul>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="setLanguage('es')">ES</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" onclick="setLanguage('ca')">CA</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+        </div>
+        <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMenu()" aria-label="Cerrar menú">&times;</button>
+        <a href="#nosotros" onclick="toggleMenu()" data-i18n="nav.about">Nosotros</a>
+        <a href="#empresas" onclick="toggleMenu()" data-i18n="nav.companies">Empresas</a>
+        <a href="#khanvian" onclick="toggleMenu()">Khanvian</a>
+        <a href="#factoria" onclick="toggleMenu()" data-i18n="nav.factory">Factoría</a>
+        <a href="#contacto" onclick="toggleMenu()" data-i18n="nav.contact">Contacto</a>
+        <div class="mobile-lang-switcher">
+            <button class="lang-btn active" onclick="setLanguage('es'); toggleMenu()">ES</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" onclick="setLanguage('ca'); toggleMenu()">CA</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" onclick="setLanguage('en'); toggleMenu()">EN</button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-content">
+            <div class="hero-title-block">
+                <h1 class="hero-title" data-i18n-html="hero.title">Hay quien dice que el futuro es lo que está <em>por venir.</em> Nosotros preferimos decir que es lo que está <em>por construir.</em></h1>
+                <div class="hero-eyebrow">
+                    <span class="hero-eyebrow-line"></span>
+                    <span class="hero-eyebrow-text" data-i18n-html="hero.eyebrow">Grup PMP &mdash; Desde 1999</span>
+                </div>
+            </div>
+            <div class="hero-bottom">
+                <div class="hero-stat">
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-number">500+</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat.projects">Proyectos</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-number">25+</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat.years">Años</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-number">25.000</div>
+                        <div class="hero-stat-label" data-i18n="hero.stat.factory">m² Factoría</div>
+                    </div>
+                </div>
+                <a href="#nosotros" class="hero-scroll">
+                    <span data-i18n="hero.scroll">Descubre</span>
+                    <span class="hero-scroll-circle">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="intro" id="nosotros">
+        <div class="intro-inner">
+            <div class="intro-marker reveal">
+                <img src="https://media.licdn.com/dms/image/v2/D4D10AQFVjOiAM2MxBw/image-shrink_800/B4DZlWlcf7JcAg-/0/1758094283739?e=1773680400&v=beta&t=GzH4A3iK85s51N-6JoYJUkZ9Mx2LCUkwiZugv5p4-Bo" alt="Fundadora Grup PMP" loading="lazy">
+                <div class="intro-marker-caption">
+                    <strong>Montse Pujol</strong>
+                    <span data-i18n="intro.founder">Fundadora del Grup PMP</span>
+                </div>
+            </div>
+            <div>
+                <p class="intro-lead reveal" data-i18n-html="intro.lead">Grup PMP es una organización pionera en construcción industrializada que nació hace más de 25 años con una <em>visión transformadora</em> del sector.</p>
+                <p class="intro-text reveal reveal-d1" data-i18n="intro.text">Con un equipo multidisciplinar altamente especializado y una experiencia de cientos de proyectos ejecutados, ofrecemos soluciones adaptadas tanto a clientes particulares como profesionales, integrando tecnología avanzada, sostenibilidad y personalización en cada proyecto, y garantizando en todos los casos la excelencia técnica que nos ha consolidado como referentes en construcción industrializada.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies -->
+    <section class="companies" id="empresas">
+        <div class="companies-inner">
+            <div class="section-header">
+                <div>
+                    <p class="section-label reveal" data-i18n="companies.label">Ecosistema</p>
+                    <h2 class="section-title reveal reveal-d1" data-i18n="companies.title">Nuestra actividad se desarrolla a través de cuatro compañías complementarias</h2>
+                </div>
+                <div class="section-count reveal">04</div>
+            </div>
+            <div class="companies-grid">
+
+                <!-- Grup PMP -->
+                <div class="company-card reveal">
+                    <div class="company-card-top">
+                        <h3>Grup PMP</h3>
+                        <span class="company-card-number">01</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-3-image-2.jpg" alt="Proyectos Grup PMP" class="company-card-image">
+                    <p data-i18n="companies.pmp.desc">El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
+                </div>
+
+                <!-- Prêt-à-porter casas -->
+                <div class="company-card reveal reveal-d1">
+                    <div class="company-card-top">
+                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-casas-logo-black.svg" alt="Prêt-à-porter casas" class="company-card-logo">
+                        <span class="company-card-number">02</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-4-image-1.png" alt="Prêt-à-porter casas" class="company-card-image">
+                    <p data-i18n="companies.pap.desc">Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados, la división dirigida a los clientes que buscan la construcción de una vivienda unifamiliar 'llave en mano', desde la arquitectura –si se necesita– y la ingeniería, pasando por todos los trámites y gestiones de permisos, hasta las instalaciones, los acabados y el interiorismo.</p>
+                    <a href="https://www.pretaportercasas.com" target="_blank" class="card-link">
+                        <span data-i18n="companies.pap.link">¿Quieres saber más? Entra en la web de Prêt-à-porter casas</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- Prêt-à-porter studio -->
+                <div class="company-card reveal reveal-d2">
+                    <div class="company-card-top">
+                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-logo-studio.svg" alt="Prêt-à-porter studio" class="company-card-logo">
+                        <span class="company-card-number">03</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-3-image-1.jpg" alt="Prêt-à-porter studio" class="company-card-image">
+                    <p data-i18n="companies.studio.desc">Prêt-à-porter studio es nuestro estudio de interiorismo y decoración dedicado a llevar tus proyectos aún más allá, personalizándolos según las necesidades de cada propietario o futuro propietario. Si el Grupo PMP se caracteriza por cuidarlo todo hasta el último detalle, Prêt-à-porter studio es la compañía que eleva esta idea a la máxima expresión.</p>
+                    <a href="#contacto" class="card-link">
+                        <span data-i18n="companies.studio.link">Infórmate o ven a conocer nuestro showroom y compruébalo</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- àParts -->
+                <div class="company-card reveal reveal-d3">
+                    <div class="company-card-top">
+                        <h3>àParts</h3>
+                        <span class="company-card-number">04</span>
+                    </div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/02/khanvian-section-4-lect-1.jpg" alt="àParts" class="company-card-image">
+                    <p data-i18n="companies.aparts.desc">¿Quieres hacer con nosotros sólo una parte del proceso? No hay problema. àParts es la compañía del Grupo PMP que se dedica a establecer alianzas con otras compañías del sector para sumar esfuerzos y optimizar al máximo los procesos, gracias a todas las ventajas de la construcción industrializada y de nuestro sistema constructivo exclusivo.</p>
+                    <a href="#contacto" class="card-link">
+                        <span data-i18n="companies.aparts.link">Dinos. ¿Qué necesitas?</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Khanvian -->
+    <section class="khanvian" id="khanvian">
+        <div class="khanvian-inner">
+            <div class="khanvian-content">
+                <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/khanvian-logo.svg" alt="Khanvian" class="khanvian-logo reveal">
+                <h2 class="khanvian-title reveal reveal-d1" data-i18n-html="khanvian.title"><strong>Khanvian&reg;</strong> el sistema constructivo inédito y patentado del Grup PMP.</h2>
+                <p class="khanvian-text reveal reveal-d2" data-i18n-html="khanvian.text">Khanvian&reg; es construir hoy como se construirá mañana. Un revolucionario sistema constructivo que permite ahorrar tiempo y costes y aumentar drásticamente la calidad, mediante la utilización de elementos industrializados de fácil ensamblaje y simplificando al máximo las tareas en la ubicación final.</p>
+            </div>
+            <div class="khanvian-image">
+                <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/02/khanvian-main.jpg" alt="Sistema Khanvian">
+                <div class="khanvian-image-overlay"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Factory -->
+    <section class="factory" id="factoria">
+        <div class="factory-inner">
+            <div class="factory-layout">
+                <div class="factory-image-wrapper reveal">
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2025/10/IMG_7194.jpeg" alt="Factoría PMP">
+                    <div class="factory-badge">
+                        <div class="factory-badge-number">25.000</div>
+                        <div class="factory-badge-text" data-i18n="factory.badge">m² de factoría</div>
+                    </div>
+                </div>
+                <div class="factory-content">
+                    <p class="section-label reveal" data-i18n="factory.label">Nuestra casa</p>
+                    <h2 class="factory-title reveal reveal-d1" data-i18n="factory.title">Bienvenido a nuestra casa: la Factoría PMP.</h2>
+                    <p class="factory-text reveal reveal-d2" data-i18n="factory.text">Nuestro sistema constructivo se basa en llevar a cabo casi el 80% del proceso en nuestra fábrica, un complejo de 25.000 m² que funciona como un laboratorio de innovación constante, con la última tecnología y un equipo permanente y muy especializado.</p>
+                    <p class="factory-highlight reveal reveal-d3" data-i18n="factory.highlight">Esto nos permite llevar a cabo un exhaustivo control del proceso de principio a fin, elevando así los estándares de calidad y maximizando la sostenibilidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contacto">
+        <div class="contact-inner">
+            <p class="section-label reveal" data-i18n="contact.label">Contacto</p>
+            <h2 class="contact-title reveal reveal-d1" data-i18n-html="contact.title">Juntos, podemos construir el futuro en prácticamente <em>cualquier lugar.</em></h2>
+            <div class="contact-divider reveal reveal-d2"></div>
+            <div class="contact-methods reveal reveal-d2">
+                <div class="contact-method">
+                    <span class="contact-method-label" data-i18n="contact.phone">Teléfono</span>
+                    <a href="tel:+34973603954">973 603 954</a>
+                </div>
+                <div class="contact-method">
+                    <span class="contact-method-label">Email</span>
+                    <a href="mailto:miproyecto@pmp-pretaporter.com">miproyecto@pmp-pretaporter.com</a>
+                </div>
+            </div>
+            <p class="contact-cta reveal reveal-d3" data-i18n-html="contact.cta">Puedes ampliar información sobre el sistema constructivo Khanvian&reg;, así como descubrir algunos de los más de 500 proyectos que hemos desarrollado, entrando en la <a href="https://www.pretaportercasas.com" target="_blank">web de Prêt-à-porter casas</a>.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left" data-i18n-html="footer.rights">&copy; 2026 Grup PMP. Todos los derechos reservados.</div>
+            <div class="footer-offices">
+                <span class="footer-office">Lleida</span>
+                <span class="footer-office">Barcelona</span>
+                <span class="footer-office">Girona</span>
+                <span class="footer-office">Andorra</span>
+                <span class="footer-office">Madrid</span>
+                <span class="footer-office">Ibiza</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== i18n TRANSLATIONS =====
+        const translations = {
+            ca: {
+                "nav.subtitle": "Construcció industrialitzada",
+                "nav.about": "Nosaltres",
+                "nav.companies": "Empreses",
+                "nav.factory": "Factoria",
+                "nav.contact": "Contacte",
+                "hero.title": "Hi ha qui diu que el futur és el que està <em>per venir.</em> Nosaltres preferim dir que és el que està <em>per construir.</em>",
+                "hero.eyebrow": "Grup PMP &mdash; Des de 1999",
+                "hero.stat.projects": "Projectes",
+                "hero.stat.years": "Anys",
+                "hero.stat.factory": "m² Factoria",
+                "hero.scroll": "Descobreix",
+                "intro.founder": "Fundadora del Grup PMP",
+                "intro.lead": "Grup PMP és una organització pionera en construcció industrialitzada que va néixer fa més de 25 anys amb una <em>visió transformadora</em> del sector.",
+                "intro.text": "Amb un equip multidisciplinari altament especialitzat i una experiència de centenars de projectes executats, oferim solucions adaptades tant a clients particulars com professionals, integrant tecnologia avançada, sostenibilitat i personalització en cada projecte, i garantint en tots els casos l'excel·lència tècnica que ens ha consolidat com a referents en construcció industrialitzada.",
+                "companies.label": "Ecosistema",
+                "companies.title": "La nostra activitat es desenvolupa a través de quatre companyies complementàries",
+                "companies.pmp.desc": "El propi Grup PMP, a part de ser la companyia que engloba la resta, és també la divisió que s'encarrega de desenvolupar els projectes més ambiciosos. Edificis plurifamiliars, grans promocions d'habitatges unifamiliars i la construcció d'equipaments com escoles, centres mèdics o culturals.",
+                "companies.pap.desc": "Prêt-à-porter casas és la companyia destinada a desenvolupar els nostres projectes més personalitzats, la divisió dirigida als clients que busquen la construcció d'un habitatge unifamiliar 'claus en mà', des de l'arquitectura –si cal– i l'enginyeria, passant per tots els tràmits i gestions de permisos, fins a les instal·lacions, els acabats i l'interiorisme.",
+                "companies.pap.link": "Vols saber-ne més? Entra al web de Prêt-à-porter casas",
+                "companies.studio.desc": "Prêt-à-porter studio és el nostre estudi d'interiorisme i decoració dedicat a portar els teus projectes encara més enllà, personalitzant-los segons les necessitats de cada propietari o futur propietari. Si el Grup PMP es caracteritza per cuidar-ho tot fins a l'últim detall, Prêt-à-porter studio és la companyia que eleva aquesta idea a la màxima expressió.",
+                "companies.studio.link": "Informa't o vine a conèixer el nostre showroom i comprova-ho",
+                "companies.aparts.desc": "Vols fer amb nosaltres només una part del procés? Cap problema. àParts és la companyia del Grup PMP que es dedica a establir aliances amb altres companyies del sector per sumar esforços i optimitzar al màxim els processos, gràcies a tots els avantatges de la construcció industrialitzada i del nostre sistema constructiu exclusiu.",
+                "companies.aparts.link": "Digues-nos. Què necessites?",
+                "khanvian.title": "<strong>Khanvian&reg;</strong> el sistema constructiu inèdit i patentat del Grup PMP.",
+                "khanvian.text": "Khanvian&reg; és construir avui com es construirà demà. Un revolucionari sistema constructiu que permet estalviar temps i costos i augmentar dràsticament la qualitat, mitjançant la utilització d'elements industrialitzats de fàcil acoblament i simplificant al màxim les tasques a la ubicació final.",
+                "factory.badge": "m² de factoria",
+                "factory.label": "La nostra casa",
+                "factory.title": "Benvingut a casa nostra: la Factoria PMP.",
+                "factory.text": "El nostre sistema constructiu es basa a dur a terme gairebé el 80% del procés a la nostra fàbrica, un complex de 25.000 m² que funciona com un laboratori d'innovació constant, amb la darrera tecnologia i un equip permanent i molt especialitzat.",
+                "factory.highlight": "Això ens permet dur a terme un exhaustiu control del procés de principi a fi, elevant així els estàndards de qualitat i maximitzant la sostenibilitat.",
+                "contact.label": "Contacte",
+                "contact.title": "Junts, podem construir el futur pràcticament a <em>qualsevol lloc.</em>",
+                "contact.phone": "Telèfon",
+                "contact.cta": "Pots ampliar informació sobre el sistema constructiu Khanvian&reg;, així com descobrir alguns dels més de 500 projectes que hem desenvolupat, entrant al <a href=\"https://www.pretaportercasas.com\" target=\"_blank\">web de Prêt-à-porter casas</a>.",
+                "footer.rights": "&copy; 2026 Grup PMP. Tots els drets reservats.",
+                "meta.title": "Grup PMP — Construcció Industrialitzada",
+                "meta.description": "Grup PMP és una organització pionera en construcció industrialitzada amb més de 25 anys d'experiència. Solucions adaptades per a particulars i professionals."
+            },
+            en: {
+                "nav.subtitle": "Industrialized Construction",
+                "nav.about": "About",
+                "nav.companies": "Companies",
+                "nav.factory": "Factory",
+                "nav.contact": "Contact",
+                "hero.title": "Some say the future is what is <em>yet to come.</em> We prefer to say it is what is <em>yet to be built.</em>",
+                "hero.eyebrow": "Grup PMP &mdash; Since 1999",
+                "hero.stat.projects": "Projects",
+                "hero.stat.years": "Years",
+                "hero.stat.factory": "m² Factory",
+                "hero.scroll": "Discover",
+                "intro.founder": "Founder of Grup PMP",
+                "intro.lead": "Grup PMP is a pioneering organization in industrialized construction, born over 25 years ago with a <em>transformative vision</em> for the sector.",
+                "intro.text": "With a highly specialized multidisciplinary team and hundreds of completed projects, we offer tailored solutions for both private and professional clients, integrating advanced technology, sustainability and customization into every project, and guaranteeing in all cases the technical excellence that has established us as leaders in industrialized construction.",
+                "companies.label": "Ecosystem",
+                "companies.title": "Our activity is developed through four complementary companies",
+                "companies.pmp.desc": "Grup PMP itself, apart from being the company that encompasses the rest, is also the division in charge of developing the most ambitious projects. Multi-family buildings, large single-family housing developments and the construction of facilities such as schools, medical or cultural centers.",
+                "companies.pap.desc": "Prêt-à-porter casas is the company dedicated to developing our most customized projects, the division aimed at clients seeking the construction of a single-family home 'turnkey', from architecture –if needed– and engineering, through all permits and paperwork, to installations, finishes and interior design.",
+                "companies.pap.link": "Want to know more? Visit the Prêt-à-porter casas website",
+                "companies.studio.desc": "Prêt-à-porter studio is our interior design and decoration studio dedicated to taking your projects even further, personalizing them according to each owner's or future owner's needs. If Grup PMP is known for caring about every last detail, Prêt-à-porter studio is the company that takes this idea to its highest expression.",
+                "companies.studio.link": "Find out more or come visit our showroom and see for yourself",
+                "companies.aparts.desc": "Want to work with us on just part of the process? No problem. àParts is the Grup PMP company dedicated to establishing alliances with other companies in the sector to join forces and optimize processes to the fullest, thanks to all the advantages of industrialized construction and our exclusive building system.",
+                "companies.aparts.link": "Tell us. What do you need?",
+                "khanvian.title": "<strong>Khanvian&reg;</strong> the unprecedented and patented building system by Grup PMP.",
+                "khanvian.text": "Khanvian&reg; means building today the way we will build tomorrow. A revolutionary construction system that saves time and costs while dramatically increasing quality, through the use of easily assembled industrialized elements and simplifying on-site tasks to the maximum.",
+                "factory.badge": "m² factory",
+                "factory.label": "Our home",
+                "factory.title": "Welcome to our home: the PMP Factory.",
+                "factory.text": "Our building system is based on carrying out nearly 80% of the process in our factory, a 25,000 m² complex that operates as a constant innovation laboratory, with the latest technology and a permanent, highly specialized team.",
+                "factory.highlight": "This allows us to carry out an exhaustive control of the process from start to finish, thereby raising quality standards and maximizing sustainability.",
+                "contact.label": "Contact",
+                "contact.title": "Together, we can build the future virtually <em>anywhere.</em>",
+                "contact.phone": "Phone",
+                "contact.cta": "You can find more information about the Khanvian&reg; building system, as well as discover some of the more than 500 projects we have developed, by visiting the <a href=\"https://www.pretaportercasas.com\" target=\"_blank\">Prêt-à-porter casas website</a>.",
+                "footer.rights": "&copy; 2026 Grup PMP. All rights reserved.",
+                "meta.title": "Grup PMP — Industrialized Construction",
+                "meta.description": "Grup PMP is a pioneering organization in industrialized construction with over 25 years of experience. Tailored solutions for private and professional clients."
+            }
+        };
+
+        // Store original ES content
+        const esStore = {};
+
+        function initLanguage() {
+            // Store all original ES content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                esStore[key] = el.textContent;
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                esStore[key] = el.innerHTML;
+            });
+            // Store meta
+            esStore['meta.title'] = document.title;
+            esStore['meta.description'] = document.querySelector('meta[name="description"]').getAttribute('content');
+
+            // Detect language
+            const params = new URLSearchParams(window.location.search);
+            const paramLang = params.get('lang');
+            const lang = paramLang || localStorage.getItem('pmp-lang') || 'es';
+
+            setLanguage(lang, true);
+        }
+
+        function setLanguage(lang, isInit) {
+            const validLangs = ['es', 'ca', 'en'];
+            if (!validLangs.includes(lang)) lang = 'es';
+
+            // Swap text
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (lang === 'es') {
+                    el.textContent = esStore[key] || el.textContent;
+                } else {
+                    el.textContent = (translations[lang] && translations[lang][key]) || esStore[key] || el.textContent;
+                }
+            });
+
+            // Swap HTML
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                if (lang === 'es') {
+                    el.innerHTML = esStore[key] || el.innerHTML;
+                } else {
+                    el.innerHTML = (translations[lang] && translations[lang][key]) || esStore[key] || el.innerHTML;
+                }
+            });
+
+            // Update meta
+            if (lang === 'es') {
+                document.title = esStore['meta.title'];
+                document.querySelector('meta[name="description"]').setAttribute('content', esStore['meta.description']);
+            } else {
+                document.title = translations[lang]['meta.title'] || esStore['meta.title'];
+                document.querySelector('meta[name="description"]').setAttribute('content', translations[lang]['meta.description'] || esStore['meta.description']);
+            }
+
+            // Update html lang
+            document.documentElement.lang = lang;
+
+            // Update active buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+            });
+
+            // Persist
+            localStorage.setItem('pmp-lang', lang);
+
+            // Update URL without reload
+            const url = new URL(window.location);
+            if (lang === 'es') {
+                url.searchParams.delete('lang');
+            } else {
+                url.searchParams.set('lang', lang);
+            }
+            history.replaceState(null, '', url);
+
+            // Restore opacity (FOUC prevention)
+            document.documentElement.style.opacity = '1';
+            document.documentElement.style.transition = 'opacity 0.15s ease';
+        }
+
+        // ===== ORIGINAL SCRIPTS =====
+
+        // Nav scroll
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 80);
+        }, { passive: true });
+
+        // Mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Scroll reveal with IntersectionObserver
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        reveals.forEach(el => observer.observe(el));
+
+        // Subtle hero parallax
+        const heroBg = document.getElementById('heroBg');
+        if (heroBg) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY < window.innerHeight) {
+                    heroBg.style.transform = `translateY(${window.scrollY * 0.2}px) scale(1.02)`;
+                }
+            }, { passive: true });
+        }
+
+        // Init language (DOM is ready since script is at end of body)
+        initLanguage();
+    </script>
+
+</body>
+</html>
