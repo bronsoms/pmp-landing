@@ -17,7 +17,9 @@
                     {% set delay = loop.index0 %}
                     <div class="company-card reveal{% if delay > 0 %} reveal-d{{ delay }}{% endif %}">
                         <div class="company-card-top">
-                            {% if card.logo and card.logo.filename %}
+                            {% if loop.index0 === 0 %}
+                                <img src="/assets/logo-black.png" alt="{{ card.name }}" class="company-card-logo company-card-logo--pmp">
+                            {% elif card.logo and card.logo.filename %}
                                 <img src="{{ card.logo.filename }}" alt="{{ card.name }}" class="company-card-logo">
                             {% else %}
                                 <h3>{{ card.name }}</h3>
@@ -40,7 +42,7 @@
                 {# Fallback: hardcoded cards #}
                 <div class="company-card reveal">
                     <div class="company-card-top">
-                        <h3>Grup PMP</h3>
+                        <img src="/assets/logo-black.png" alt="Grup PMP" class="company-card-logo company-card-logo--pmp">
                         <span class="company-card-number">01</span>
                     </div>
                     <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/home-section-3-image-2.jpg" alt="Proyectos Grup PMP" class="company-card-image">
