@@ -330,7 +330,7 @@ body::after {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('/assets/frame-08s.jpg') center/cover no-repeat;
+    background: url('../assets/frame-08s.jpg') center/cover no-repeat;
     will-change: transform;
 }
 
