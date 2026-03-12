@@ -121,5 +121,45 @@ if (heroBg) {
     }, { passive: true });
 }
 
+// ===== FACTORY CAROUSEL =====
+(function() {
+    const track = document.querySelector('.factory-carousel-track');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.factory-slide');
+    const dotsContainer = document.querySelector('.factory-carousel-dots');
+    const prevBtn = document.querySelector('.factory-carousel-prev');
+    const nextBtn = document.querySelector('.factory-carousel-next');
+    let current = 0;
+    let autoTimer;
+
+    // Create dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'factory-carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Imagen ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        dotsContainer.children[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dotsContainer.children[current].classList.add('active');
+        resetAuto();
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => goTo(current + 1), 4500);
+    }
+    resetAuto();
+})();
+
 // Init language (DOM is ready since script is at end of body)
 initLanguage();

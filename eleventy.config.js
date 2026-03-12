@@ -2,6 +2,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addPassthroughCopy("src/fonts");
 
   // Storyblok Visual Editor: output _editable comment as filter
   eleventyConfig.addFilter("sbEditable", function(blok) {

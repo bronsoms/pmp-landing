@@ -3,20 +3,7 @@
 {% if s %}{{ s | sbEditable | safe }}{% endif %}
 <section class="intro" id="nosotros">
     <div class="intro-inner">
-        <div class="intro-marker reveal">
-            {% if s and s.founder_image.filename %}
-            <img src="{{ s.founder_image.filename }}" alt="{{ s.founder_name }}" loading="lazy">
-            {% else %}
-            <img src="https://media.licdn.com/dms/image/v2/D4D10AQFVjOiAM2MxBw/image-shrink_800/B4DZlWlcf7JcAg-/0/1758094283739?e=1773680400&v=beta&t=GzH4A3iK85s51N-6JoYJUkZ9Mx2LCUkwiZugv5p4-Bo" alt="Fundadora Grup PMP" loading="lazy">
-            {% endif %}
-            <div class="intro-marker-caption">
-                <strong>{{ s.founder_name if s else 'Montse Pujol' }}</strong>
-                <span data-i18n="intro.founder">{{ s.founder_role if s else 'Fundadora del Grup PMP' }}</span>
-            </div>
-        </div>
-        <div>
-            <p class="intro-lead reveal" data-i18n-html="intro.lead">{% if s %}{{ s.lead | safe }}{% else %}Grup PMP es una organización pionera en construcción industrializada que nació hace más de 25 años con una <em>visión transformadora</em> del sector.{% endif %}</p>
-            <p class="intro-text reveal reveal-d1" data-i18n="intro.text">{{ s.text if s else 'Con un equipo multidisciplinar altamente especializado y una experiencia de cientos de proyectos ejecutados, ofrecemos soluciones adaptadas tanto a clientes particulares como profesionales, integrando tecnología avanzada, sostenibilidad y personalización en cada proyecto, y garantizando en todos los casos la excelencia técnica que nos ha consolidado como referentes en construcción industrializada.' }}</p>
-        </div>
+        <p class="intro-lead reveal" data-i18n-html="intro.lead">{% if s %}{{ s.lead | safe }}{% else %}Grup PMP es una organización pionera en construcción industrializada que nació hace más de 25 años con una <em>visión transformadora</em> del sector.{% endif %}</p>
+        <p class="intro-text reveal reveal-d1" data-i18n="intro.text">{{ s.text if s else 'Con un equipo multidisciplinar altamente especializado y una experiencia de cientos de proyectos ejecutados, ofrecemos soluciones adaptadas tanto a clientes particulares como profesionales, integrando tecnología avanzada, sostenibilidad y personalización en cada proyecto, y garantizando en todos los casos la excelencia técnica que nos ha consolidado como referentes en construcción industrializada.' }}</p>
     </div>
 </section>

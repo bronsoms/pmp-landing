@@ -4,22 +4,42 @@
 <section class="factory" id="factoria">
     <div class="factory-inner">
         <div class="factory-layout">
-            <div class="factory-image-wrapper reveal">
-                {% if s and s.image and s.image.filename %}
-                <img src="{{ s.image.filename }}" alt="Factoría PMP">
-                {% else %}
-                <img src="https://www.pretaportercasas.com/wp-content/uploads/2025/10/IMG_7194.jpeg" alt="Factoría PMP">
-                {% endif %}
-                <div class="factory-badge">
-                    <div class="factory-badge-number">{{ s.badge_number if s else '25.000' }}</div>
-                    <div class="factory-badge-text" data-i18n="factory.badge">{{ s.badge_text if s else 'm² de factoría' }}</div>
-                </div>
-            </div>
             <div class="factory-content">
                 <p class="section-label reveal" data-i18n="factory.label">{{ s.label if s else 'Nuestra casa' }}</p>
                 <h2 class="factory-title reveal reveal-d1" data-i18n="factory.title">{{ s.title if s else 'Bienvenido a nuestra casa: la Factoría PMP.' }}</h2>
                 <p class="factory-text reveal reveal-d2" data-i18n="factory.text">{{ s.text if s else 'Nuestro sistema constructivo se basa en llevar a cabo casi el 80% del proceso en nuestra fábrica, un complejo de 25.000 m² que funciona como un laboratorio de innovación constante, con la última tecnología y un equipo permanente y muy especializado.' }}</p>
-                <p class="factory-highlight reveal reveal-d3" data-i18n="factory.highlight">{{ s.highlight if s else 'Esto nos permite llevar a cabo un exhaustivo control del proceso de principio a fin, elevando así los estándares de calidad y maximizando la sostenibilidad.' }}</p>
+                <div class="highlight-box reveal reveal-d3">
+                    <div class="factory-badge-inline">
+                        <span class="factory-badge-number">{{ s.badge_number if s else '25.000' }}</span>
+                        <span class="factory-badge-text" data-i18n="factory.badge">{{ s.badge_text if s else 'm² de factoría' }}</span>
+                    </div>
+                </div>
+                <p class="factory-highlight reveal reveal-d4" data-i18n="factory.highlight">{{ s.highlight if s else 'Esto nos permite llevar a cabo un exhaustivo control del proceso de principio a fin, elevando así los estándares de calidad y maximizando la sostenibilidad.' }}</p>
+            </div>
+            <div class="factory-carousel reveal reveal-d2">
+                <div class="factory-carousel-track">
+                    <div class="factory-slide active">
+                        <img src="{{ '/assets/aerial.jpg' | url }}" alt="Vista aérea Factoría PMP">
+                    </div>
+                    <div class="factory-slide">
+                        <img src="{{ '/assets/factory-contenedor.jpg' | url }}" alt="Producción en fábrica">
+                    </div>
+                    <div class="factory-slide">
+                        <img src="{{ '/assets/photo-s4a7262.jpg' | url }}" alt="Equipo en factoría">
+                    </div>
+                    <div class="factory-slide">
+                        <img src="{{ '/assets/factory-wall.jpg' | url }}" alt="Factoría del futuro">
+                    </div>
+                </div>
+                <div class="factory-carousel-controls">
+                    <button class="factory-carousel-btn factory-carousel-prev" aria-label="Anterior">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    </button>
+                    <div class="factory-carousel-dots"></div>
+                    <button class="factory-carousel-btn factory-carousel-next" aria-label="Siguiente">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

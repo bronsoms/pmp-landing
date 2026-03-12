@@ -2,6 +2,10 @@
 {% set s = home.es.khanvian if home else null %}
 {% if s %}{{ s | sbEditable | safe }}{% endif %}
 <section class="khanvian" id="khanvian">
+    <div class="khanvian-bg">
+        <img src="{{ '/assets/khanvian-bg.jpg' | url }}" alt="Sistema Khanvian">
+        <div class="khanvian-bg-overlay"></div>
+    </div>
     <div class="khanvian-inner">
         <div class="khanvian-content">
             {% if s and s.logo and s.logo.filename %}
@@ -10,15 +14,9 @@
             <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/khanvian-logo.svg" alt="Khanvian" class="khanvian-logo reveal">
             {% endif %}
             <h2 class="khanvian-title reveal reveal-d1" data-i18n-html="khanvian.title">{% if s %}{{ s.title | safe }}{% else %}<strong>Khanvian&reg;</strong> el sistema constructivo inédito y patentado del Grup PMP.{% endif %}</h2>
-            <p class="khanvian-text reveal reveal-d2" data-i18n-html="khanvian.text">{% if s %}{{ s.text | safe }}{% else %}Khanvian&reg; es construir hoy como se construirá mañana. Un revolucionario sistema constructivo que permite ahorrar tiempo y costes y aumentar drásticamente la calidad, mediante la utilización de elementos industrializados de fácil ensamblaje y simplificando al máximo las tareas en la ubicación final.{% endif %}</p>
-        </div>
-        <div class="khanvian-image">
-            {% if s and s.image and s.image.filename %}
-            <img src="{{ s.image.filename }}" alt="Sistema Khanvian">
-            {% else %}
-            <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/02/khanvian-main.jpg" alt="Sistema Khanvian">
-            {% endif %}
-            <div class="khanvian-image-overlay"></div>
+            <div class="highlight-box reveal reveal-d2">
+                <p class="khanvian-text" data-i18n-html="khanvian.text">{% if s %}{{ s.text | safe }}{% else %}Khanvian&reg; es construir hoy como se construirá mañana. Un revolucionario sistema constructivo que permite ahorrar tiempo y costes y aumentar drásticamente la calidad, mediante la utilización de elementos industrializados de fácil ensamblaje y simplificando al máximo las tareas en la ubicación final.{% endif %}</p>
+            </div>
         </div>
     </div>
 </section>
