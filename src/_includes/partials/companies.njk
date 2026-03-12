@@ -4,8 +4,8 @@
 <section class="companies" id="empresas">
     <div class="companies-inner">
         <div class="companies-header reveal">
-            <p class="section-label" data-i18n="companies.label">{{ s.label if s else 'Ecosistema' }}</p>
-            <h2 class="companies-title" data-i18n="companies.title">{{ s.title if s else 'Nuestra actividad se desarrolla a través de cuatro compañías complementarias' }}</h2>
+            <p class="section-label">{{ s.label if s else 'Ecosistema' }}</p>
+            <h2 class="companies-title">{{ s.title if s else 'Nuestra actividad se desarrolla a través de cuatro compañías complementarias' }}</h2>
         </div>
 
         <div class="companies-editorial">
@@ -26,10 +26,10 @@
                         {% else %}
                             <h3 class="co-name">{{ card.name }}</h3>
                         {% endif %}
-                        <p data-i18n="companies.{{ cardKeys[loop.index0] }}.desc">{{ card.description }}</p>
+                        <p>{{ card.description }}</p>
                         {% if card.link_text %}
                             <a href="{{ card.link_url }}" {% if card.link_external %}target="_blank"{% endif %} class="co-link">
-                                <span data-i18n="companies.{{ cardKeys[loop.index0] }}.link">{{ card.link_text }}</span>
+                                <span>{{ card.link_text }}</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
                         {% endif %}
@@ -45,7 +45,7 @@
                     </div>
                     <div class="co-text">
                         <img src="{{ '/assets/logo-black.png' | url }}" alt="Grup PMP" class="co-logo co-logo--pmp">
-                        <p data-i18n="companies.pmp.desc">El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
+                        <p>El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
                     </div>
                 </article>
                 <article class="co-block co-block--2 reveal reveal-d1">
@@ -55,9 +55,9 @@
                     </div>
                     <div class="co-text">
                         <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-casas-logo-black.svg" alt="Prêt-à-porter casas" class="co-logo">
-                        <p data-i18n="companies.pap.desc">Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados.</p>
+                        <p>Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados.</p>
                         <a href="https://www.pretaportercasas.com" target="_blank" class="co-link">
-                            <span data-i18n="companies.pap.link">¿Quieres saber más? Entra en la web de Prêt-à-porter casas</span>
+                            <span>¿Quieres saber más? Entra en la web de Prêt-à-porter casas</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -69,9 +69,9 @@
                     </div>
                     <div class="co-text">
                         <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-logo-studio.svg" alt="Prêt-à-porter studio" class="co-logo">
-                        <p data-i18n="companies.studio.desc">Prêt-à-porter studio es nuestro estudio de interiorismo y decoración.</p>
+                        <p>Prêt-à-porter studio es nuestro estudio de interiorismo y decoración.</p>
                         <a href="#contacto" class="co-link">
-                            <span data-i18n="companies.studio.link">Infórmate o ven a conocer nuestro showroom y compruébalo</span>
+                            <span>Infórmate o ven a conocer nuestro showroom y compruébalo</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>
@@ -83,9 +83,9 @@
                     </div>
                     <div class="co-text">
                         <h3 class="co-name">àParts</h3>
-                        <p data-i18n="companies.aparts.desc">àParts es la compañía del Grupo PMP que se dedica a establecer alianzas.</p>
+                        <p>àParts es la compañía del Grupo PMP que se dedica a establecer alianzas.</p>
                         <a href="#contacto" class="co-link">
-                            <span data-i18n="companies.aparts.link">Dinos. ¿Qué necesitas?</span>
+                            <span>Dinos. ¿Qué necesitas?</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
                     </div>

@@ -5,29 +5,29 @@
     <div class="hero-bg" id="heroBg"></div>
     <div class="hero-content">
         <div class="hero-title-block">
-            <h1 class="hero-title" data-i18n-html="hero.title">{% if h %}{{ h.title | safe }}{% else %}Hay quien dice que el futuro es lo que está <em>por venir.</em> Nosotros preferimos decir que es lo que está <em>por construir.</em>{% endif %}</h1>
+            <h1 class="hero-title">{% if h %}{{ h.title | safe }}{% else %}Hay quien dice que el futuro es lo que está <em>por venir.</em> Nosotros preferimos decir que es lo que está <em>por construir.</em>{% endif %}</h1>
             <div class="hero-eyebrow">
                 <span class="hero-eyebrow-line"></span>
-                <span class="hero-eyebrow-text" data-i18n-html="hero.eyebrow">{% if h %}{{ h.eyebrow | safe }}{% else %}Grup PMP &mdash; Desde 1999{% endif %}</span>
+                <span class="hero-eyebrow-text">{% if h %}{{ h.eyebrow | safe }}{% else %}Grup PMP &mdash; Desde 1999{% endif %}</span>
             </div>
         </div>
         <div class="hero-bottom">
             <div class="hero-stat">
                 <div class="hero-stat-item">
                     <div class="hero-stat-number">{{ h.stat_projects_number if h else '500+' }}</div>
-                    <div class="hero-stat-label" data-i18n="hero.stat.projects">{{ h.stat_projects_label if h else 'Proyectos' }}</div>
+                    <div class="hero-stat-label">{{ h.stat_projects_label if h else 'Proyectos' }}</div>
                 </div>
                 <div class="hero-stat-item">
                     <div class="hero-stat-number">{{ h.stat_years_number if h else '25+' }}</div>
-                    <div class="hero-stat-label" data-i18n="hero.stat.years">{{ h.stat_years_label if h else 'Años' }}</div>
+                    <div class="hero-stat-label">{{ h.stat_years_label if h else 'Años' }}</div>
                 </div>
                 <div class="hero-stat-item">
                     <div class="hero-stat-number">{{ h.stat_factory_number if h else '25.000' }}</div>
-                    <div class="hero-stat-label" data-i18n="hero.stat.factory">{{ h.stat_factory_label if h else 'm² Factoría' }}</div>
+                    <div class="hero-stat-label">{{ h.stat_factory_label if h else 'm² Factoría' }}</div>
                 </div>
             </div>
             <a href="#nosotros" class="hero-scroll">
-                <span data-i18n="hero.scroll">{{ h.scroll_text if h else 'Descubre' }}</span>
+                <span>{{ h.scroll_text if h else 'Descubre' }}</span>
                 <svg class="hero-scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
             </a>
         </div>

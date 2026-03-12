@@ -3,7 +3,7 @@
 {% if s %}{{ s | sbEditable | safe }}{% endif %}
 <footer class="footer">
     <div class="footer-inner">
-        <div class="footer-left" data-i18n-html="footer.rights">{% if s %}{{ s.rights | safe }}{% else %}&copy; 2026 Grup PMP. Todos los derechos reservados.{% endif %}</div>
+        <div class="footer-left">{% if s %}{{ s.rights | safe }}{% else %}&copy; 2026 Grup PMP. Todos los derechos reservados.{% endif %}</div>
         <div class="footer-offices">
             {% if s and s.offices %}
                 {% for office in s.offices.split(',') %}

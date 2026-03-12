@@ -10,29 +10,11 @@
     <title>{{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
     {% endif %}
-    <link rel="alternate" hreflang="es" href="?lang=es">
-    <link rel="alternate" hreflang="ca" href="?lang=ca">
-    <link rel="alternate" hreflang="en" href="?lang=en">
-    <link rel="alternate" hreflang="x-default" href="?lang=es">
-    <script>
-        (function(){
-            var p = new URLSearchParams(window.location.search).get('lang');
-            var l = p || localStorage.getItem('pmp-lang') || 'es';
-            if (l !== 'es') document.documentElement.style.opacity = '0';
-        })();
-    </script>
     <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 </head>
 <body>
     {{ content | safe }}
 
-    <script>
-    {% if home %}
-        const translations = {{ home.translations | dump | safe }};
-    {% else %}
-        const translations = {{ translations | dump | safe }};
-    {% endif %}
-    </script>
     <script src="{{ '/js/main.js' | url }}"></script>
     <script src="https://app.storyblok.com/f/storyblok-v2-latest.js"></script>
     <script>
