@@ -1,22 +1,13 @@
-<!-- Footer -->
-{% set s = home.es.footer if home else null %}
-{% if s %}{{ s | sbEditable | safe }}{% endif %}
 <footer class="footer">
-    <div class="footer-inner">
-        <div class="footer-left">{% if s %}{{ s.rights | safe }}{% else %}&copy; 2026 Grup PMP. Todos los derechos reservados.{% endif %}</div>
-        <div class="footer-offices">
-            {% if s and s.offices %}
-                {% for office in s.offices.split(',') %}
-                <span class="footer-office">{{ office | trim }}</span>
-                {% endfor %}
-            {% else %}
-                <span class="footer-office">Lleida</span>
-                <span class="footer-office">Barcelona</span>
-                <span class="footer-office">Girona</span>
-                <span class="footer-office">Andorra</span>
-                <span class="footer-office">Madrid</span>
-                <span class="footer-office">Ibiza</span>
-            {% endif %}
+    <div class="footer__inner">
+        <span class="footer__copy">&copy; 2026 Grup PMP. Todos los derechos reservados.</span>
+        <div class="footer__cities">
+            <span class="footer__city">Lleida</span>
+            <span class="footer__city">Barcelona</span>
+            <span class="footer__city">Girona</span>
+            <span class="footer__city">Andorra</span>
+            <span class="footer__city">Madrid</span>
+            <span class="footer__city">Ibiza</span>
         </div>
     </div>
 </footer>

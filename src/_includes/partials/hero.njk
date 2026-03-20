@@ -1,35 +1,11 @@
-<!-- Hero -->
-{% set h = home.es.hero if home else null %}
-{% if h %}{{ h | sbEditable | safe }}{% endif %}
 <section class="hero" id="hero">
-    <div class="hero-bg" id="heroBg"></div>
-    <div class="hero-content">
-        <div class="hero-title-block">
-            <h1 class="hero-title">{% if h %}{{ h.title | safe }}{% else %}Hay quien dice que el futuro es lo que está <em>por venir.</em> Nosotros preferimos decir que es lo que está <em>por construir.</em>{% endif %}</h1>
-            <div class="hero-eyebrow">
-                <span class="hero-eyebrow-line"></span>
-                <span class="hero-eyebrow-text">{% if h %}{{ h.eyebrow | safe }}{% else %}Grup PMP &mdash; Desde 1999{% endif %}</span>
-            </div>
-        </div>
-        <div class="hero-bottom">
-            <div class="hero-stat">
-                <div class="hero-stat-item">
-                    <div class="hero-stat-number">{{ h.stat_projects_number if h else '500+' }}</div>
-                    <div class="hero-stat-label">{{ h.stat_projects_label if h else 'Proyectos' }}</div>
-                </div>
-                <div class="hero-stat-item">
-                    <div class="hero-stat-number">{{ h.stat_years_number if h else '25+' }}</div>
-                    <div class="hero-stat-label">{{ h.stat_years_label if h else 'Años' }}</div>
-                </div>
-                <div class="hero-stat-item">
-                    <div class="hero-stat-number">{{ h.stat_factory_number if h else '25.000' }}</div>
-                    <div class="hero-stat-label">{{ h.stat_factory_label if h else 'm² Factoría' }}</div>
-                </div>
-            </div>
-            <a href="#nosotros" class="hero-scroll">
-                <span>{{ h.scroll_text if h else 'Descubre' }}</span>
-                <svg class="hero-scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            </a>
-        </div>
+    <div class="hero__bg" id="heroBg">
+        <video autoplay muted loop playsinline poster="{{ '/assets/hero-robot-2.png' | url }}">
+            <source src="{{ '/assets/factory-future.mp4' | url }}" type="video/mp4">
+        </video>
+    </div>
+    <div class="hero__content">
+        <p class="hero__tagline">Hay quien dice<br>que el futuro<br>es lo que está<br>por venir.</p>
+        <h1 class="hero__title">Nosotros preferimos decir que es lo que está por construir.</h1>
     </div>
 </section>

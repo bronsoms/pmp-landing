@@ -1,96 +1,46 @@
-<!-- Companies -->
-{% set s = home.es.companies if home else null %}
-{% if s %}{{ s | sbEditable | safe }}{% endif %}
 <section class="companies" id="empresas">
-    <div class="companies-inner">
-        <div class="companies-header reveal">
-            <p class="section-label">{{ s.label if s else 'Ecosistema' }}</p>
-            <h2 class="companies-title">{{ s.title if s else 'Nuestra actividad se desarrolla a través de cuatro compañías complementarias' }}</h2>
-        </div>
+    <div class="blocks-divider">
+        <img src="{{ '/assets/blocks-pattern.svg' | url }}" alt="" class="blocks-divider__img" aria-hidden="true">
+    </div>
 
-        <div class="companies-editorial">
-            {% if s and s.cards %}
-                {% set cardKeys = ['pmp', 'pap', 'studio', 'aparts'] %}
-                {% set cardImages = ['/assets/photo-mg3587.jpg', '/assets/pap-render.jpg', '/assets/photo-t8a1847.jpg', '/assets/showroom-12.jpg'] %}
-                {% for card in s.cards %}
-                <article class="co-block co-block--{{ loop.index }} reveal{% if loop.index0 > 0 %} reveal-d{{ loop.index0 }}{% endif %}">
-                    <div class="co-img-wrap">
-                        <img src="{{ cardImages[loop.index0] | url }}" alt="{{ card.name }}">
-                        <span class="co-number">{{ card.number }}</span>
-                    </div>
-                    <div class="co-text">
-                        {% if loop.index0 === 0 %}
-                            <img src="{{ '/assets/logo-black.png' | url }}" alt="{{ card.name }}" class="co-logo co-logo--pmp">
-                        {% elif card.logo and card.logo.filename %}
-                            <img src="{{ card.logo.filename }}" alt="{{ card.name }}" class="co-logo">
-                        {% else %}
-                            <h3 class="co-name">{{ card.name }}</h3>
-                        {% endif %}
-                        <p>{{ card.description }}</p>
-                        {% if card.link_text %}
-                            <a href="{{ card.link_url }}" {% if card.link_external %}target="_blank"{% endif %} class="co-link">
-                                <span>{{ card.link_text }}</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
-                        {% endif %}
-                    </div>
-                </article>
-                {% endfor %}
-            {% else %}
-                {# Fallback #}
-                <article class="co-block co-block--1 reveal">
-                    <div class="co-img-wrap">
-                        <img src="{{ '/assets/photo-mg3587.jpg' | url }}" alt="Grup PMP">
-                        <span class="co-number">01</span>
-                    </div>
-                    <div class="co-text">
-                        <img src="{{ '/assets/logo-black.png' | url }}" alt="Grup PMP" class="co-logo co-logo--pmp">
-                        <p>El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
-                    </div>
-                </article>
-                <article class="co-block co-block--2 reveal reveal-d1">
-                    <div class="co-img-wrap">
-                        <img src="{{ '/assets/pap-render.jpg' | url }}" alt="Prêt-à-porter casas">
-                        <span class="co-number">02</span>
-                    </div>
-                    <div class="co-text">
-                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-casas-logo-black.svg" alt="Prêt-à-porter casas" class="co-logo">
-                        <p>Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados.</p>
-                        <a href="https://www.pretaportercasas.com" target="_blank" class="co-link">
-                            <span>¿Quieres saber más? Entra en la web de Prêt-à-porter casas</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </article>
-                <article class="co-block co-block--3 reveal reveal-d2">
-                    <div class="co-img-wrap">
-                        <img src="{{ '/assets/photo-t8a1847.jpg' | url }}" alt="Prêt-à-porter studio">
-                        <span class="co-number">03</span>
-                    </div>
-                    <div class="co-text">
-                        <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-logo-studio.svg" alt="Prêt-à-porter studio" class="co-logo">
-                        <p>Prêt-à-porter studio es nuestro estudio de interiorismo y decoración.</p>
-                        <a href="#contacto" class="co-link">
-                            <span>Infórmate o ven a conocer nuestro showroom y compruébalo</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </article>
-                <article class="co-block co-block--4 reveal reveal-d3">
-                    <div class="co-img-wrap">
-                        <img src="{{ '/assets/showroom-12.jpg' | url }}" alt="àParts">
-                        <span class="co-number">04</span>
-                    </div>
-                    <div class="co-text">
-                        <h3 class="co-name">àParts</h3>
-                        <p>àParts es la compañía del Grupo PMP que se dedica a establecer alianzas.</p>
-                        <a href="#contacto" class="co-link">
-                            <span>Dinos. ¿Qué necesitas?</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </article>
-            {% endif %}
+    <div class="stack-carousel" id="stackCarousel">
+        <div class="stack-carousel__sticky">
+            <div class="companies__heading">
+                <h2 class="companies__title sr">Nuestra actividad se desarrolla a través de cuatro compañías complementarias:</h2>
+            </div>
+            <div class="stack-carousel__cards" id="stackCards">
+
+                <!-- Card 1: Grup PMP -->
+                <div class="stack-card" data-index="0" data-state="active">
+                    <div class="stack-card__gold-line"></div>
+                    <img src="{{ '/assets/logo-black.png' | url }}" alt="Grup PMP" class="stack-card__logo">
+                    <p class="stack-card__body">El propio Grup PMP, aparte de ser la compañía que engloba al resto, es también la división que se encarga de desarrollar los proyectos más ambiciosos. Edificios plurifamiliares, grandes promociones de viviendas unifamiliares y la construcción de equipamientos como escuelas, centros médicos o culturales.</p>
+                </div>
+
+                <!-- Card 2: Prêt-à-porter casas -->
+                <div class="stack-card" data-index="1" data-state="queued-1">
+                    <div class="stack-card__gold-line"></div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-casas-logo-black.svg" alt="Prêt-à-porter casas" class="stack-card__logo">
+                    <p class="stack-card__body">Prêt-à-porter casas es la compañía destinada a desarrollar nuestros proyectos más personalizados, dirigidos a clientes donde la arquitectura más innovadora se funde con los interiores y acabados de primera.</p>
+                    <a href="https://www.pretaportercasas.com" target="_blank" class="stack-card__cta">Entra en la web de Prêt-à-porter casas</a>
+                </div>
+
+                <!-- Card 3: Prêt-à-porter studio -->
+                <div class="stack-card" data-index="2" data-state="queued-2">
+                    <div class="stack-card__gold-line"></div>
+                    <img src="https://www.pretaportercasas.com/wp-content/uploads/2024/01/pret-a-porter-logo-studio.svg" alt="Prêt-à-porter studio" class="stack-card__logo">
+                    <p class="stack-card__body">Prêt-à-porter studio es nuestro estudio de interiorismo y decoración, dedicado a llevar la personalización de cada proyecto a la máxima expresión.</p>
+                </div>
+
+                <!-- Card 4: àParts -->
+                <div class="stack-card" data-index="3" data-state="queued-3">
+                    <div class="stack-card__gold-line"></div>
+                    <p class="stack-card__name">àParts</p>
+                    <p class="stack-card__body">àParts es la compañía del Grupo PMP que se dedica a establecer alianzas y colaboraciones estratégicas con partners tecnológicos y constructivos.</p>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
