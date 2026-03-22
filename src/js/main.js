@@ -37,22 +37,54 @@ function toggleMenu() {
     els.forEach(function(el) { obs.observe(el); });
 })();
 
-/* Diagonal line — fixed on viewport, from top-center to bottom-left */
+
+/* Diagonal line segments — each section gets its portion of the global diagonal */
 (function() {
-    var svg = document.getElementById('diagonalSvg');
-    var line = document.getElementById('diagonalLine');
-    if (!svg || !line) return;
-    function resize() {
-        var w = window.innerWidth;
-        var h = window.innerHeight;
-        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-        line.setAttribute('x1', w * 0.50);
-        line.setAttribute('y1', 0);
-        line.setAttribute('x2', w * 0.35);
-        line.setAttribute('y2', h);
+    var segments = document.querySelectorAll('.diagonal-segment');
+    if (!segments.length) return;
+
+    function getAbsoluteTop(el) {
+        var top = 0;
+        while (el) {
+            top += el.offsetTop;
+            el = el.offsetParent;
+        }
+        return top;
     }
-    resize();
-    window.addEventListener('resize', resize);
+
+    function update() {
+        var w = document.documentElement.clientWidth;
+        var pageH = document.documentElement.scrollHeight;
+        // Global line: from (50% of w, 0) to (5% of w, pageH)
+        var x1Global = w * 0.50;
+        var x2Global = w * 0.05;
+
+        segments.forEach(function(seg) {
+            var section = seg.parentElement;
+            var rect = section.getBoundingClientRect();
+            var top = rect.top + window.scrollY;
+            var height = seg.offsetHeight || rect.height;
+            if (height <= 0) return;
+            var bottom = top + height;
+
+            // Calculate x position at section top and bottom
+            var xAtTop = x1Global + (x2Global - x1Global) * (top / pageH);
+            var xAtBottom = x1Global + (x2Global - x1Global) * (bottom / pageH);
+
+            var svg = seg.querySelector('svg');
+            var line = seg.querySelector('line');
+            svg.setAttribute('viewBox', '0 0 ' + w + ' ' + height);
+            line.setAttribute('x1', xAtTop);
+            line.setAttribute('y1', 0);
+            line.setAttribute('x2', xAtBottom);
+            line.setAttribute('y2', height);
+        });
+    }
+
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    window.addEventListener('scroll', update, { passive: true });
 })();
 
 /* Diagonal clip-path — match the diagonal line angle */
@@ -97,109 +129,95 @@ function toggleMenu() {
     window.addEventListener('load', updateClipPaths);
 })();
 
-/* Stack carousel — cards animate on scroll */
+/* Stack carousel — simple scroll, no parallax */
 (function() {
     var carousel = document.getElementById('stackCarousel');
     var cardsContainer = document.getElementById('stackCards');
     var cards = document.querySelectorAll('.stack-card');
-    var dots = document.querySelectorAll('.stack-carousel__dot');
+    var khanvian = document.getElementById('khanvian');
     if (!carousel || !cards.length) return;
 
     var total = cards.length;
 
-    function update() {
-        var rect = carousel.getBoundingClientRect();
-        var carouselTop = carousel.offsetTop;
-        var carouselHeight = carousel.offsetHeight;
-        var vh = window.innerHeight;
-        var scrollY = window.scrollY;
+    // Use IntersectionObserver to trigger card changes
+    var currentActive = 0;
 
-        var scrollStart = carouselTop + vh * 0.8;
-        var scrollEnd = carouselTop + carouselHeight - vh;
-        var totalProgress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
-        totalProgress = Math.max(0, Math.min(1, totalProgress));
-
-        // Use 90% of scroll for card switching, last 10% for exit
-        var cardProgress = Math.min(totalProgress / 0.9, 1);
-        var exitProgress = Math.max((totalProgress - 0.9) / 0.1, 0);
-
-        // Which card is active (0 to total-1)
-        var activeIndex = Math.min(Math.floor(cardProgress * total), total - 1);
-
+    function setActive(index) {
+        if (index === currentActive) return;
+        currentActive = index;
         cards.forEach(function(card, i) {
-            if (i < activeIndex) {
+            if (i < index) {
                 card.setAttribute('data-state', 'done');
-            } else if (i === activeIndex) {
+            } else if (i === index) {
                 card.setAttribute('data-state', 'active');
             } else {
-                var queuePos = i - activeIndex;
+                var queuePos = i - index;
                 card.setAttribute('data-state', 'queued-' + Math.min(queuePos, 3));
             }
         });
-
-        // Show khanvian when last card is active
-        var khanvian = document.getElementById('khanvian');
-        var heading = document.querySelector('.companies__heading');
-        var isLastCard = activeIndex === total - 1;
-
-        // Khanvian opacity: fade in during last card, full during exit
-        var khanvianOpacity = 0;
-        if (isLastCard && exitProgress === 0) {
-            var lastCardStart = (total - 1) / total;
-            var lastCardProgress = (cardProgress - lastCardStart) / (1 / total);
-            khanvianOpacity = Math.min(lastCardProgress * 1.5, 1);
-        }
-        if (exitProgress > 0) {
-            khanvianOpacity = 1;
-        }
         if (khanvian) {
-            khanvian.style.opacity = khanvianOpacity;
+            khanvian.style.opacity = index === total - 1 ? 1 : 0;
         }
-
-        // Exit: all cards and heading slide up when reaching end
-        if (exitProgress > 0) {
-            var yOffset = exitProgress * vh;
-            cardsContainer.style.transform = 'translateY(-' + yOffset + 'px)';
-            cardsContainer.style.opacity = 1 - exitProgress;
-            if (heading) {
-                heading.style.transform = 'translateY(-' + yOffset + 'px)';
-                heading.style.opacity = 1 - exitProgress;
-            }
-        } else {
-            cardsContainer.style.transform = '';
-            cardsContainer.style.opacity = '';
-            if (heading) {
-                heading.style.transform = '';
-                heading.style.opacity = '';
-            }
-        }
-
-        dots.forEach(function(dot, i) {
-            if (i === activeIndex) {
-                dot.classList.add('stack-carousel__dot--active');
-            } else {
-                dot.classList.remove('stack-carousel__dot--active');
-            }
-        });
     }
 
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-})();
+    // Click/tap on queued cards to advance
+    cards.forEach(function(card, i) {
+        card.addEventListener('click', function() {
+            setActive(i);
+        });
+    });
 
-/* Hide hero bg when contact section is visible */
-(function() {
-    var heroBg = document.getElementById('heroBg');
-    var contact = document.getElementById('contacto');
-    if (!heroBg || !contact) return;
+    var shrinkPerCard = 300;
+    var sticky = document.querySelector('.stack-carousel__sticky');
+    var initialCarouselH, initialStickyH, scrollRange;
+
+    function measure() {
+        // Reset height to recalculate
+        carousel.style.height = '';
+        if (sticky) sticky.style.height = '';
+        initialCarouselH = carousel.offsetHeight;
+        initialStickyH = sticky ? sticky.offsetHeight : 0;
+        scrollRange = initialCarouselH - window.innerHeight;
+        if (scrollRange <= 0) scrollRange = 1;
+    }
+
+    // Measure after layout settles
+    setTimeout(measure, 100);
 
     window.addEventListener('scroll', function() {
-        var contactRect = contact.getBoundingClientRect();
-        if (contactRect.top < window.innerHeight) {
-            heroBg.style.visibility = 'hidden';
-        } else {
-            heroBg.style.visibility = 'visible';
+        if (!initialCarouselH) return;
+        var rect = carousel.getBoundingClientRect();
+        var vh = window.innerHeight;
+
+        // Only start when section top reaches viewport top
+        if (rect.top > 0) {
+            setActive(0);
+            return;
         }
+
+        var scrolled = -rect.top;
+        // Use a fixed scroll amount per card
+        var scrollPerCard = scrollRange / total;
+        var index = Math.min(Math.floor(scrolled / scrollPerCard), total - 1);
+        setActive(index);
+
+        // Shrink
+        var shrink = index * shrinkPerCard;
+        carousel.style.height = (initialCarouselH - shrink) + 'px';
+        if (sticky) sticky.style.height = (initialStickyH - shrink) + 'px';
+    }, { passive: true });
+
+    window.addEventListener('resize', measure);
+})();
+
+/* Hide hero bg when scrolled past hero */
+(function() {
+    var heroBg = document.getElementById('heroBg');
+    var hero = document.getElementById('hero');
+    if (!heroBg || !hero) return;
+
+    window.addEventListener('scroll', function() {
+        var heroBottom = hero.offsetTop + hero.offsetHeight;
+        heroBg.style.visibility = window.scrollY > heroBottom ? 'hidden' : 'visible';
     }, { passive: true });
 })();
