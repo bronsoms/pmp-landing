@@ -1,3 +1,13 @@
+/* Mobile: replace <br> with spaces in hero tagline and companies title */
+(function() {
+    if (window.innerWidth <= 900) {
+        var els = document.querySelectorAll('.hero__tagline, .companies__title, .khanvian__title');
+        els.forEach(function(el) {
+            el.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+        });
+    }
+})();
+
 /* Nav scroll */
 (function() {
     var nav = document.getElementById('nav');
@@ -40,6 +50,7 @@ function toggleMenu() {
 
 /* Diagonal line segments — each section gets its portion of the global diagonal */
 (function() {
+    if (window.innerWidth <= 900) return;
     var segments = document.querySelectorAll('.diagonal-segment');
     if (!segments.length) return;
 
@@ -89,6 +100,7 @@ function toggleMenu() {
 
 /* Hero text aligned to diagonal line */
 (function() {
+    if (window.innerWidth <= 900) return;
     var heroContent = document.querySelector('.hero__content');
     if (!heroContent) return;
 
@@ -120,6 +132,7 @@ function toggleMenu() {
 
 /* Diagonal clip-path — match the diagonal line angle */
 (function() {
+    if (window.innerWidth <= 900) return;
     function updateClipPaths() {
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.scrollHeight;
@@ -160,8 +173,9 @@ function toggleMenu() {
     window.addEventListener('load', updateClipPaths);
 })();
 
-/* Stack carousel — circular rotation on scroll */
+/* Stack carousel — circular rotation on scroll (desktop only) */
 (function() {
+    if (window.innerWidth <= 900) return;
     var carousel = document.getElementById('stackCarousel');
     var cards = document.querySelectorAll('.stack-card');
     var khanvian = document.getElementById('khanvian');
@@ -231,8 +245,9 @@ function toggleMenu() {
     window.addEventListener('resize', measure);
 })();
 
-/* Blocks dividers — faster parallax scroll */
+/* Blocks dividers — faster parallax scroll (desktop only) */
 (function() {
+    if (window.innerWidth <= 900) return;
     var blocks = document.querySelectorAll('.blocks-divider, .khanvian__blocks-divider');
     if (!blocks.length) return;
     var speed = 1.8; // moves 1.8x faster than normal scroll
@@ -247,8 +262,9 @@ function toggleMenu() {
     }, { passive: true });
 })();
 
-/* Hide hero bg when scrolled past hero */
+/* Hide hero bg when scrolled past hero (desktop only) */
 (function() {
+    if (window.innerWidth <= 900) return;
     var heroBg = document.getElementById('heroBg');
     var hero = document.getElementById('hero');
     if (!heroBg || !hero) return;
