@@ -87,6 +87,37 @@ function toggleMenu() {
     window.addEventListener('scroll', update, { passive: true });
 })();
 
+/* Hero text aligned to diagonal line */
+(function() {
+    var heroContent = document.querySelector('.hero__content');
+    if (!heroContent) return;
+
+    function positionTexts() {
+        var w = document.documentElement.clientWidth;
+        var pageH = document.documentElement.scrollHeight;
+        var vh = window.innerHeight;
+        var x1 = w * 0.50;
+        var x2 = w * 0.05;
+        var gap = 40;
+
+        // Tagline center at 42% of vh, title at 58%
+        var lineAtTagline = x1 + (x2 - x1) * (vh * 0.42 / pageH);
+        var lineAtTitle = x1 + (x2 - x1) * (vh * 0.58 / pageH);
+
+        // Tagline: right edge = gap to the left of the line
+        // CSS right = distance from right edge of container to right edge of element
+        var taglineRight = w - lineAtTagline + gap;
+        heroContent.style.setProperty('--diag-tagline-right', taglineRight + 'px');
+
+        // Title: left edge = gap to the right of the line
+        heroContent.style.setProperty('--diag-title-left', (lineAtTitle + gap) + 'px');
+    }
+
+    positionTexts();
+    window.addEventListener('resize', positionTexts);
+    window.addEventListener('load', positionTexts);
+})();
+
 /* Diagonal clip-path — match the diagonal line angle */
 (function() {
     function updateClipPaths() {
@@ -129,85 +160,91 @@ function toggleMenu() {
     window.addEventListener('load', updateClipPaths);
 })();
 
-/* Stack carousel — simple scroll, no parallax */
+/* Stack carousel — circular rotation on scroll */
 (function() {
     var carousel = document.getElementById('stackCarousel');
-    var cardsContainer = document.getElementById('stackCards');
     var cards = document.querySelectorAll('.stack-card');
     var khanvian = document.getElementById('khanvian');
+    var heading = document.querySelector('.companies__heading');
     if (!carousel || !cards.length) return;
 
     var total = cards.length;
+    var currentStep = -1;
 
-    // Use IntersectionObserver to trigger card changes
-    var currentActive = 0;
-
-    function setActive(index) {
-        if (index === currentActive) return;
-        currentActive = index;
+    // Circular: the active card goes to the back of the queue
+    function setStep(step) {
+        if (step === currentStep) return;
+        currentStep = step;
+        var s = Math.min(step, total - 1);
         cards.forEach(function(card, i) {
-            if (i < index) {
-                card.setAttribute('data-state', 'done');
-            } else if (i === index) {
+            var pos = (i - s + total) % total;
+            if (pos === 0) {
                 card.setAttribute('data-state', 'active');
             } else {
-                var queuePos = i - index;
-                card.setAttribute('data-state', 'queued-' + Math.min(queuePos, 3));
+                card.setAttribute('data-state', 'queued-' + Math.min(pos, 3));
             }
         });
+        // Show khanvian only after last card has been seen
         if (khanvian) {
-            khanvian.style.opacity = index === total - 1 ? 1 : 0;
+            khanvian.style.opacity = (step >= total - 1) ? 1 : 0;
         }
     }
 
-    // Click/tap on queued cards to advance
     cards.forEach(function(card, i) {
-        card.addEventListener('click', function() {
-            setActive(i);
-        });
+        card.addEventListener('click', function() { setStep(i); });
     });
 
-    var shrinkPerCard = 300;
-    var sticky = document.querySelector('.stack-carousel__sticky');
-    var initialCarouselH, initialStickyH, scrollRange;
+    // Scroll per card + extra dwell after the last card
+    var vh = window.innerHeight;
+    var scrollPerCard = vh * 0.75;
+    var dwellAfterLast = vh * 1;
+    var totalScrollNeeded = (scrollPerCard * total) + dwellAfterLast;
 
     function measure() {
-        // Reset height to recalculate
-        carousel.style.height = '';
-        if (sticky) sticky.style.height = '';
-        initialCarouselH = carousel.offsetHeight;
-        initialStickyH = sticky ? sticky.offsetHeight : 0;
-        scrollRange = initialCarouselH - window.innerHeight;
-        if (scrollRange <= 0) scrollRange = 1;
+        vh = window.innerHeight;
+        scrollPerCard = vh * 0.75;
+        dwellAfterLast = vh * 1;
+        totalScrollNeeded = (scrollPerCard * total) + dwellAfterLast;
+        carousel.style.height = (vh + totalScrollNeeded) + 'px';
     }
 
-    // Measure after layout settles
-    setTimeout(measure, 100);
+    measure();
 
     window.addEventListener('scroll', function() {
-        if (!initialCarouselH) return;
         var rect = carousel.getBoundingClientRect();
-        var vh = window.innerHeight;
+        var isSticky = rect.top <= 0 && rect.bottom > vh;
 
-        // Only start when section top reaches viewport top
-        if (rect.top > 0) {
-            setActive(0);
-            return;
+        // Show/hide heading with carousel
+        if (heading) {
+            heading.classList.toggle('companies__heading--visible', isSticky);
         }
 
+        if (rect.top > 0) {
+            setStep(0);
+            return;
+        }
         var scrolled = -rect.top;
-        // Use a fixed scroll amount per card
-        var scrollPerCard = scrollRange / total;
-        var index = Math.min(Math.floor(scrolled / scrollPerCard), total - 1);
-        setActive(index);
-
-        // Shrink
-        var shrink = index * shrinkPerCard;
-        carousel.style.height = (initialCarouselH - shrink) + 'px';
-        if (sticky) sticky.style.height = (initialStickyH - shrink) + 'px';
+        var step = Math.min(Math.floor(scrolled / scrollPerCard), total - 1);
+        setStep(step);
     }, { passive: true });
 
     window.addEventListener('resize', measure);
+})();
+
+/* Blocks dividers — faster parallax scroll */
+(function() {
+    var blocks = document.querySelectorAll('.blocks-divider, .khanvian__blocks-divider');
+    if (!blocks.length) return;
+    var speed = 1.8; // moves 1.8x faster than normal scroll
+
+    window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY;
+        blocks.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
+            var offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * (speed - 1);
+            el.style.transform = 'translate3d(0,' + offset + 'px,0)';
+        });
+    }, { passive: true });
 })();
 
 /* Hide hero bg when scrolled past hero */

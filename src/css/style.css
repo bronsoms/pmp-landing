@@ -249,18 +249,22 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .hero__tagline {
+    position: absolute;
+    right: var(--diag-tagline-right, 55%);
+    top: 40%;
     font-family: var(--f-display);
     font-weight: 600;
     font-size: 32px;
     line-height: 33px;
     color: var(--c-lime);
     text-transform: uppercase;
-    word-wrap: break-word;
-    margin-left: 30%;
-    margin-bottom: -2rem;
+    text-align: right;
 }
 
 .hero__title {
+    position: absolute;
+    left: var(--diag-title-left, 48%);
+    top: 48%;
     font-family: 'Atrament', var(--f-display);
     font-weight: 400;
     font-style: italic;
@@ -268,10 +272,7 @@ img { display: block; max-width: 100%; height: auto; }
     line-height: 48px;
     color: var(--c-lime);
     text-transform: uppercase;
-    word-wrap: break-word;
     max-width: 450px;
-    margin-left: 48%;
-    margin-bottom: 2.5rem;
 }
 
 .hero__desc-box {
@@ -367,10 +368,16 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .companies__heading {
-    position: absolute;
+    position: fixed;
     top: 4rem;
-    left: 8rem;
+    left: 2%;
+    width: 22%;
     z-index: 20;
+    opacity: 0;
+    transition: opacity .5s;
+}
+.companies__heading--visible {
+    opacity: 1;
 }
 
 .companies__title {
@@ -380,7 +387,6 @@ img { display: block; max-width: 100%; height: auto; }
     line-height: 1.1;
     text-transform: uppercase;
     color: var(--c-dark-text);
-    max-width: 350px;
     text-align: right;
 }
 
@@ -394,7 +400,7 @@ img { display: block; max-width: 100%; height: auto; }
 .stack-carousel__sticky {
     position: sticky;
     top: 0;
-    height: calc(65vh + 660px + 4rem);
+    height: 100vh;
     overflow: visible;
     display: flex;
     align-items: flex-start;
@@ -678,17 +684,15 @@ img { display: block; max-width: 100%; height: auto; }
 .khanvian__header {
     position: absolute;
     top: 4rem;
-    left: 8rem;
+    left: 2%;
+    width: 22%;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2rem;
-    max-width: 420px;
+    text-align: right;
 }
 
-.khanvian__logo {
-    height: 40px;
+.khanvian__logo-main {
+    display: inline-block;
+    margin-bottom: 2rem;
 }
 
 .khanvian__title {
@@ -698,7 +702,6 @@ img { display: block; max-width: 100%; height: auto; }
     line-height: 1.03;
     text-transform: uppercase;
     color: var(--c-dark-text);
-    max-width: 320px;
     text-align: right;
 }
 
@@ -716,8 +719,10 @@ img { display: block; max-width: 100%; height: auto; }
 .khanvian__overlay {
     position: absolute;
     top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
     z-index: 2;
     display: flex;
     flex-direction: column;
