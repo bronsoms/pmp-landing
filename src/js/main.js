@@ -1,6 +1,3 @@
-/* Flag JS-enabled for CSS progressive enhancement */
-document.documentElement.classList.add('js');
-
 /* Mobile: replace <br> with spaces in hero tagline and companies title */
 (function() {
     if (window.innerWidth <= 900) {
@@ -187,7 +184,6 @@ function toggleMenu() {
 
     var total = cards.length;
     var currentStep = -1;
-    var khanvianHidden = false;
 
     // Circular: the active card goes to the back of the queue
     function setStep(step) {
@@ -204,10 +200,6 @@ function toggleMenu() {
         });
         // Show khanvian only after last card has been seen
         if (khanvian) {
-            if (!khanvianHidden) {
-                khanvian.style.transition = 'opacity .3s ease';
-                khanvianHidden = true;
-            }
             khanvian.style.opacity = (step >= total - 1) ? 1 : 0;
         }
     }
@@ -242,11 +234,7 @@ function toggleMenu() {
         }
 
         if (rect.top > 0) {
-            // Carousel not yet in view — don't hide khanvian
-            if (khanvianHidden) {
-                khanvian.style.opacity = 1;
-            }
-            currentStep = -1;
+            setStep(0);
             return;
         }
         var scrolled = -rect.top;
