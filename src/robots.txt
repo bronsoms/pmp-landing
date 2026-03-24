@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://grup-pmp.com/sitemap.xml

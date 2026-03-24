@@ -373,8 +373,10 @@ img { display: block; max-width: 100%; height: auto; }
     left: 2%;
     width: 22%;
     z-index: 20;
-    opacity: 0;
     transition: opacity .5s;
+}
+.js .companies__heading {
+    opacity: 0;
 }
 .companies__heading--visible {
     opacity: 1;
@@ -1041,7 +1043,8 @@ img { display: block; max-width: 100%; height: auto; }
 /* ==========================================================================
    SCROLL REVEAL
    ========================================================================== */
-.sr {
+/* Without JS: content visible. With JS: hidden until scrolled into view */
+.js .sr {
     opacity: 0; transform: translateY(22px);
     transition: opacity .75s cubic-bezier(.4,0,0,1),
                 transform .75s cubic-bezier(.4,0,0,1);
@@ -1053,28 +1056,28 @@ img { display: block; max-width: 100%; height: auto; }
 .sr--d4 { transition-delay: .5s; }
 
 /* Fade from left */
-.sr--left {
+.js .sr--left {
     opacity: 0; transform: translateX(-40px);
     transition: opacity 1s cubic-bezier(.4,0,0,1),
                 transform 1s cubic-bezier(.4,0,0,1);
 }
 
 /* Fade from right */
-.sr--right {
+.js .sr--right {
     opacity: 0; transform: translateX(40px);
     transition: opacity 1s cubic-bezier(.4,0,0,1),
                 transform 1s cubic-bezier(.4,0,0,1);
 }
 
 /* Slow fade up */
-.sr--slow {
+.js .sr--slow {
     opacity: 0; transform: translateY(35px);
     transition: opacity 1.2s cubic-bezier(.4,0,0,1),
                 transform 1.2s cubic-bezier(.4,0,0,1);
 }
 
 /* Scale fade */
-.sr--scale {
+.js .sr--scale {
     opacity: 0; transform: scale(0.95);
     transition: opacity 1s cubic-bezier(.4,0,0,1),
                 transform 1s cubic-bezier(.4,0,0,1);
