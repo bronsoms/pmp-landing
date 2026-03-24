@@ -1309,6 +1309,7 @@ img { display: block; max-width: 100%; height: auto; }
         display: flex;
         flex-direction: column;
         overflow: visible;
+        min-height: auto;
     }
     .factory__header {
         position: relative;
@@ -1320,6 +1321,7 @@ img { display: block; max-width: 100%; height: auto; }
         z-index: 3;
     }
     .factory__photo {
+        position: static;
         order: 1;
     }
     .factory__header-row {
