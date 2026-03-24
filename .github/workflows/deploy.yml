@@ -28,7 +28,7 @@ jobs:
         env:
           STORYBLOK_DELIVERY_API_TOKEN: ${{ secrets.STORYBLOK_DELIVERY_API_TOKEN }}
           STORYBLOK_REGION: eu
-          PATH_PREFIX: /pmp-landing/
+          PATH_PREFIX: /
         run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
