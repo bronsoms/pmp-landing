@@ -117,6 +117,52 @@ body {
 img { display: block; max-width: 100%; height: auto; }
 ::selection { background: var(--c-lime); color: var(--c-dark-text); }
 
+section {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Page navigation dots */
+.page-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    z-index: 101;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+}
+.page-dots--visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.page-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--c-dark);
+    opacity: .25;
+    transition: opacity .3s, transform .3s, background .3s;
+    display: block;
+}
+
+.page-dot--active {
+    opacity: 1;
+    background: var(--c-lime);
+    transform: scale(1.3);
+}
+
+/* Parallax stacking */
+section {
+    position: sticky;
+    top: 0;
+}
+
 
 /* ==========================================================================
    NAV
@@ -139,6 +185,10 @@ img { display: block; max-width: 100%; height: auto; }
 
 .nav--dark .nav__logo-img {
     filter: brightness(0);
+}
+.nav--hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 .nav__links { display: flex; gap: 2.2rem; list-style: none; }
 .nav__links a {
@@ -192,7 +242,6 @@ img { display: block; max-width: 100%; height: auto; }
    HERO
    ========================================================================== */
 .hero {
-    position: relative;
     min-height: 100vh;
     background: transparent;
     overflow: visible;
@@ -334,14 +383,27 @@ img { display: block; max-width: 100%; height: auto; }
    ========================================================================== */
 .intro {
     background: var(--c-gray-bg);
-    position: relative;
-    z-index: 10;
-    padding: 8rem 8rem 20rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 8rem;
+    overflow: visible;
+}
+
+.intro__blocks {
+    position: absolute;
+    left: 4.5rem;
+    top: -6rem;
+    z-index: 0;
+}
+.intro__blocks-img {
+    width: auto;
+    height: 340px;
 }
 
 .intro__inner {
     max-width: 800px;
-    margin: 0 auto;
     position: relative;
     z-index: 1;
 }
@@ -358,26 +420,25 @@ img { display: block; max-width: 100%; height: auto; }
 
 
 /* ==========================================================================
-   COMPANIES — Stack animated carousel with parallax
+   COMPANIES — Stack carousel with manual arrows
    ========================================================================== */
 .companies {
     background: var(--c-gray-bg);
-    position: relative;
-    z-index: 10;
-    overflow: visible;
+    z-index: 3;
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
+}
+
+.companies__layout {
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    padding: 3rem 2rem 2rem;
 }
 
 .companies__heading {
-    position: fixed;
-    top: 4rem;
-    left: 2%;
-    width: 22%;
-    z-index: 20;
-    opacity: 0;
-    transition: opacity .5s;
-}
-.companies__heading--visible {
-    opacity: 1;
+    flex: 0 0 28%;
+    padding: 4rem 2rem 0 3.5rem;
+    align-self: flex-start;
 }
 
 .companies__title {
@@ -390,32 +451,21 @@ img { display: block; max-width: 100%; height: auto; }
     text-align: right;
 }
 
-/* Stack carousel: pinned section, cards stack on scroll */
+/* Stack carousel container */
 .stack-carousel {
+    flex: 1;
     position: relative;
-    overflow: visible;
-    height: calc(65vh + 660px + 100vh);
-}
-
-.stack-carousel__sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: visible;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    padding-left: 38vw;
-    z-index: 16;
+    align-items: center;
 }
 
 .stack-carousel__cards {
     position: relative;
-    width: 60vw;
-    max-width: 620px;
-    height: 65vh;
-    max-height: 580px;
+    width: 55vw;
+    max-width: 600px;
+    height: 60vh;
+    max-height: 500px;
+    margin-left: 4vw;
 }
 
 /* Individual card */
@@ -426,45 +476,45 @@ img { display: block; max-width: 100%; height: auto; }
     width: 100%;
     height: 100%;
     background: var(--c-lime);
-    padding: 2rem 5.5rem 2rem 6.5rem;
+    padding: 2rem 5rem 2rem 5.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     transition: transform .6s cubic-bezier(.4, 0, 0, 1),
                 opacity .5s cubic-bezier(.4, 0, 0, 1);
     will-change: transform, opacity;
-    filter: drop-shadow(20px 28px 40px rgba(0, 0, 0, .7));
+    filter: drop-shadow(16px 22px 32px rgba(0, 0, 0, .55));
 }
 
-/* Active card: centered position */
+/* Active card */
 .stack-card[data-state="active"] {
     transform: translateX(0) translateY(0) scale(1);
     opacity: 1;
     z-index: 10;
 }
 
-/* Queued cards: staggered diagonal offset to the right and down */
+/* Queued cards: diagonal offset */
 .stack-card[data-state="queued-1"] {
-    transform: translateX(220px) translateY(220px) scale(0.95);
-    opacity: 0.75;
+    transform: translateX(100px) translateY(100px) scale(0.95);
+    opacity: 0.7;
     z-index: 3;
 }
 
 .stack-card[data-state="queued-2"] {
-    transform: translateX(440px) translateY(440px) scale(0.90);
-    opacity: 0.55;
+    transform: translateX(200px) translateY(200px) scale(0.90);
+    opacity: 0.5;
     z-index: 2;
 }
 
 .stack-card[data-state="queued-3"] {
-    transform: translateX(660px) translateY(660px) scale(0.85);
-    opacity: 0.4;
+    transform: translateX(300px) translateY(300px) scale(0.85);
+    opacity: 0.35;
     z-index: 1;
 }
 
-/* Done cards: exit up-left with scale down */
+/* Done cards */
 .stack-card[data-state="done"] {
-    transform: translateX(-80px) translateY(-60px) scale(0.8);
+    transform: translateX(-60px) translateY(-40px) scale(0.85);
     opacity: 0;
     z-index: 0;
 }
@@ -493,15 +543,6 @@ img { display: block; max-width: 100%; height: auto; }
     height: 48px;
 }
 
-.stack-card__name {
-    font-family: var(--f-display);
-    font-weight: 700;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    color: var(--c-dark-text);
-    margin-bottom: 2.5rem;
-}
-
 .stack-card__body {
     font-family: var(--f-body);
     font-weight: 600;
@@ -523,162 +564,35 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .stack-card__cta:hover { opacity: .7; }
 
-/* Progress dots */
-.stack-carousel__dots {
+/* Navigation arrows */
+.stack-carousel__nav {
     position: absolute;
-    right: 3.5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 1rem;
+    right: 1rem;
     display: flex;
-    flex-direction: column;
-    gap: .6rem;
+    gap: .5rem;
+    z-index: 20;
 }
 
-.stack-carousel__dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--c-dark);
-    opacity: .2;
-    transition: opacity .3s, transform .3s;
-}
-
-.stack-carousel__dot--active {
-    opacity: 1;
-    background: var(--c-lime);
-    transform: scale(1.3);
-}
-
-.companies__layout {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    padding: 5rem 0 8rem;
-    position: relative;
-    z-index: 2;
-}
-
-.companies__heading-col {
-    padding: 0 2rem 0 3.5rem;
-    display: flex; align-items: flex-start;
-    padding-top: 2rem;
-}
-
-.companies__section-title {
-    font-family: var(--f-display);
-    font-weight: 600;
-    font-size: clamp(1.25rem, 1.8vw, 2rem);
-    line-height: 1.03;
-    text-transform: uppercase;
+.stack-carousel__arrow {
+    background: none;
+    border: none;
     color: var(--c-dark-text);
-    text-align: right;
+    font-size: 2.4rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity .2s;
 }
-
-.companies__cards-col {
-    position: relative;
-    padding-bottom: 4rem;
-}
-
-/* --- Company Cards (trapezoid shape) --- */
-.company-card {
-    position: relative;
-    width: 100%;
-    max-width: 640px;
-    margin-bottom: -80px;
-}
-
-.company-card:last-child { margin-bottom: 0; }
-
-.company-card__shape {
-    clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
-    background: var(--c-lime);
-    padding: 5rem 3.5rem 5rem 5rem;
-    position: relative;
-    min-height: 380px;
-}
-
-.company-card--offset-1 { margin-left: 0; }
-.company-card--offset-2 { margin-left: clamp(3rem, 8vw, 7rem); }
-.company-card--offset-3 { margin-left: clamp(6rem, 16vw, 14rem); }
-
-.company-card__gold-line {
-    width: 137px; height: 6px;
-    background: var(--c-gold);
-    border-radius: 3px;
-    margin-bottom: 2.5rem;
-}
-
-.company-card__logo {
-    height: 40px;
-    margin-bottom: 1rem;
-}
-
-.company-card__logo-svg {
-    margin-bottom: 1rem;
-}
-
-.company-card__body {
-    font-family: var(--f-body);
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.375;
-    color: var(--c-dark-text);
-    max-width: 340px;
-}
-
-.company-card__cta {
-    display: inline-block;
-    font-family: var(--f-body);
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--c-gold);
-    text-decoration: underline;
-    margin-top: .5rem;
-    transition: opacity .25s;
-}
-.company-card__cta:hover { opacity: .75; }
-
-/* àPARTS logo inline */
-.aparts-logo { height: 82px; }
-
-/* Pret-a-porter image panel */
-.companies__photo-panel {
-    position: relative;
-    width: 100%;
-    height: 540px;
-    overflow: hidden;
-    margin-top: 2rem;
-}
-.companies__photo-panel img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    mix-blend-mode: multiply;
-}
-
-/* Decorative blocks */
-.companies__blocks-left {
-    position: absolute;
-    left: 0; top: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-.companies__blocks-right {
-    position: absolute;
-    right: 0; bottom: 80px;
-    pointer-events: none;
-    z-index: 1;
-}
-
+.stack-carousel__arrow:hover { opacity: .5; }
 
 /* ==========================================================================
    KHANVIAN
    ========================================================================== */
 .khanvian {
     background: var(--c-gray-bg);
-    position: relative;
-    overflow: hidden;
-    z-index: 11;
-    opacity: 0;
-    transition: opacity .3s ease;
+    z-index: 4;
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
 }
 
 .khanvian__header {
@@ -706,12 +620,16 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .khanvian__visual {
-    position: relative;
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
 }
 
 .khanvian__photo {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
     mix-blend-mode: multiply;
 }
@@ -776,15 +694,26 @@ img { display: block; max-width: 100%; height: auto; }
    ========================================================================== */
 .factory {
     background: var(--c-gray-bg);
-    position: relative;
-    z-index: 12;
-    margin-top: 0;
+    z-index: 5;
+    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
+    overflow: visible;
+}
+
+.factory__blocks {
+    position: absolute;
+    right: 4.5rem;
+    top: -6rem;
+    z-index: 0;
+}
+.factory__blocks-img {
+    width: auto;
+    height: 340px;
 }
 
 .factory__header {
     position: absolute;
-    top: 3rem;
-    left: 17rem;
+    top: 5rem;
+    left: 3.5rem;
     z-index: 3;
 }
 
@@ -827,14 +756,16 @@ img { display: block; max-width: 100%; height: auto; }
 .factory__visual {
     position: relative;
     overflow: hidden;
+    height: 100%;
 }
 
 .factory__photo {
     width: 100%;
     display: block;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     z-index: 1;
-    margin-top: -10rem;
 }
 
 .factory__overlay-content {
@@ -899,8 +830,7 @@ img { display: block; max-width: 100%; height: auto; }
 .contact {
     background: var(--c-dark);
     padding: 15rem 3.5rem 8rem;
-    position: relative;
-    z-index: 13;
+    z-index: 6;
     box-shadow: 0 100vh 0 100vh var(--c-dark);
     overflow: hidden;
 }
@@ -1003,7 +933,7 @@ img { display: block; max-width: 100%; height: auto; }
     background: var(--c-dark);
     padding: 1.5rem 3.5rem;
     position: relative;
-    z-index: 13;
+    z-index: 7;
 }
 
 .footer__inner {
@@ -1085,26 +1015,6 @@ img { display: block; max-width: 100%; height: auto; }
    RESPONSIVE — Narrow desktop (≤1200px)
    ========================================================================== */
 @media (max-width: 1200px) {
-    /* --- Stack carousel: reduce offsets --- */
-    .stack-carousel__sticky {
-        padding-left: 30vw;
-    }
-    .stack-carousel__cards {
-        width: 55vw;
-        max-width: 520px;
-    }
-    .stack-card {
-        padding: 2rem 3rem 2rem 4rem;
-    }
-    .stack-card[data-state="queued-1"] { transform: translateX(80px) translateY(80px) scale(0.95); }
-    .stack-card[data-state="queued-2"] { transform: translateX(160px) translateY(160px) scale(0.90); }
-    .stack-card[data-state="queued-3"] { transform: translateX(240px) translateY(240px) scale(0.85); }
-
-    /* --- Companies heading --- */
-    .companies__heading {
-        width: 26%;
-    }
-
     /* --- Khanvian --- */
     .khanvian__header {
         width: 26%;
@@ -1211,60 +1121,36 @@ img { display: block; max-width: 100%; height: auto; }
     }
 
     /* --- Companies --- */
+    .companies__layout {
+        flex-direction: column;
+        min-height: auto;
+        padding: 3rem 1rem;
+    }
     .companies__heading {
-        position: static;
+        flex: none;
         width: 100%;
-        padding: 2rem 1.5rem;
-        text-align: center;
-        opacity: 1;
-    }
-    .companies__heading--visible { opacity: 1; }
-    .companies__title {
+        padding: 0 1rem 2rem;
         text-align: center;
     }
-
-    /* --- Stack Carousel — vertical column --- */
-    .stack-carousel { height: auto !important; }
-    .stack-carousel__sticky {
-        position: relative;
-        height: auto;
-        padding: 0 1.5rem 2rem;
-        flex-direction: column;
-    }
+    .companies__title { text-align: center; }
+    .companies__title br { display: inline; font-size: 0; line-height: 0; }
+    .companies__title br::before { content: ' '; font-size: 1rem; }
     .stack-carousel__cards {
-        position: relative;
-        width: 100%;
+        width: 80vw;
         max-width: 100%;
-        height: auto;
-        max-height: none;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
+        height: 50vh;
     }
     .stack-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        height: auto;
-        opacity: 1;
-        transform: none;
-        clip-path: none;
-        filter: none;
         padding: 2rem 1.5rem;
+        clip-path: none !important;
+        filter: none;
     }
-    .stack-card[data-state="active"],
-    .stack-card[data-state="queued-1"],
-    .stack-card[data-state="queued-2"],
-    .stack-card[data-state="queued-3"],
-    .stack-card[data-state="done"] {
-        transform: none;
-        opacity: 1;
-    }
-    .stack-carousel__dots { display: none; }
+    .stack-card[data-state="queued-1"] { transform: translateX(40px) translateY(40px) scale(0.95); }
+    .stack-card[data-state="queued-2"] { transform: translateX(80px) translateY(80px) scale(0.90); }
+    .stack-card[data-state="queued-3"] { transform: translateX(120px) translateY(120px) scale(0.85); }
+    .stack-card__body { font-size: .95rem; }
 
     /* --- Khanvian --- */
-    .khanvian { opacity: 1 !important; }
     .khanvian__header {
         position: relative;
         top: auto;

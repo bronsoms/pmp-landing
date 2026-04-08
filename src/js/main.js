@@ -1,24 +1,43 @@
-/* Mobile: replace <br> with spaces in hero tagline and companies title */
+/* Mobile: replace <br> with spaces in hero tagline */
 (function() {
     if (window.innerWidth <= 900) {
-        var els = document.querySelectorAll('.hero__tagline, .companies__title, .khanvian__title');
+        var els = document.querySelectorAll('.hero__tagline, .khanvian__title');
         els.forEach(function(el) {
             el.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, ' ');
         });
     }
 })();
 
-/* Nav scroll */
+/* Nav scroll + page dots */
 (function() {
     var nav = document.getElementById('nav');
-    var hero = document.getElementById('hero');
+    var intro = document.getElementById('nosotros');
+    var contact = document.getElementById('contacto');
+    var dots = document.querySelectorAll('.page-dot');
+    var dotsContainer = document.getElementById('pageDots');
+    var sections = document.querySelectorAll('section');
     if (!nav) return;
+
     window.addEventListener('scroll', function() {
         nav.classList.toggle('nav--scrolled', window.scrollY > 60);
-        if (hero) {
-            var heroBottom = hero.offsetTop + hero.offsetHeight;
-            nav.classList.toggle('nav--dark', window.scrollY > heroBottom - 100);
+        if (intro) {
+            var introTop = intro.getBoundingClientRect().top;
+            var pastHero = introTop <= 100;
+            var onContact = contact && contact.getBoundingClientRect().top <= 100;
+            nav.classList.toggle('nav--dark', pastHero && !onContact);
+            nav.classList.toggle('nav--light', onContact);
+            nav.classList.toggle('nav--hidden', onContact);
+            if (dotsContainer) dotsContainer.classList.toggle('page-dots--visible', pastHero && !onContact);
         }
+
+        // Update page dots
+        var active = 0;
+        sections.forEach(function(sec, i) {
+            if (sec.getBoundingClientRect().top <= window.innerHeight * 0.5) active = i;
+        });
+        dots.forEach(function(dot, i) {
+            dot.classList.toggle('page-dot--active', i === active);
+        });
     }, { passive: true });
 })();
 
@@ -136,28 +155,20 @@ function toggleMenu() {
     function updateClipPaths() {
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.scrollHeight;
-        // Diagonal line goes from 50% to 5% across full page height
-        // Slope: how much % of width shifts per pixel of height
         var slope = (0.50 - 0.05) * w / h;
 
+        // Stack cards
         var cards = document.querySelectorAll('.stack-card');
         cards.forEach(function(card) {
             var cardH = card.offsetHeight;
             var cardW = card.offsetWidth;
-            // Shift in % of card width over the card's height
             var shiftPct = (slope * cardH / cardW) * 100;
-
-            // Left edge: top-left shifts right by shiftPct compared to bottom-left
-            // Right edge: top-right shifts right by shiftPct compared to bottom-right
-            var clip = 'polygon(' +
-                shiftPct + '% 0%, ' +
-                '100% 0%, ' +
-                (100 - shiftPct) + '% 100%, ' +
-                '0% 100%)';
-            card.style.clipPath = clip;
+            card.style.clipPath = 'polygon(' +
+                shiftPct + '% 0%, 100% 0%, ' +
+                (100 - shiftPct) + '% 100%, 0% 100%)';
         });
 
-        // Also apply to khanvian textbox
+        // Khanvian textbox
         var kTextbox = document.querySelector('.khanvian__textbox');
         if (kTextbox) {
             var tbH = kTextbox.offsetHeight;
@@ -173,76 +184,42 @@ function toggleMenu() {
     window.addEventListener('load', updateClipPaths);
 })();
 
-/* Stack carousel — circular rotation on scroll (desktop only) */
+/* Stack carousel — auto + manual navigation */
 (function() {
-    if (window.innerWidth <= 900) return;
-    var carousel = document.getElementById('stackCarousel');
     var cards = document.querySelectorAll('.stack-card');
-    var khanvian = document.getElementById('khanvian');
-    var heading = document.querySelector('.companies__heading');
-    if (!carousel || !cards.length) return;
+    if (!cards.length) return;
 
     var total = cards.length;
-    var currentStep = -1;
+    var current = 0;
+    var interval;
 
-    // Circular: the active card goes to the back of the queue
     function setStep(step) {
-        if (step === currentStep) return;
-        currentStep = step;
-        var s = Math.min(step, total - 1);
+        current = ((step % total) + total) % total;
         cards.forEach(function(card, i) {
-            var pos = (i - s + total) % total;
+            var pos = (i - current + total) % total;
             if (pos === 0) {
                 card.setAttribute('data-state', 'active');
             } else {
                 card.setAttribute('data-state', 'queued-' + Math.min(pos, 3));
             }
         });
-        // Show khanvian only after last card has been seen
-        if (khanvian) {
-            khanvian.style.opacity = (step >= total - 1) ? 1 : 0;
-        }
     }
+
+    function next() { setStep(current + 1); }
+    function startAuto() { interval = setInterval(next, 4000); }
+    function stopAuto() { clearInterval(interval); }
+
+    var btnPrev = document.getElementById('stackPrev');
+    var btnNext = document.getElementById('stackNext');
+
+    if (btnNext) btnNext.addEventListener('click', function() { stopAuto(); setStep(current + 1); startAuto(); });
+    if (btnPrev) btnPrev.addEventListener('click', function() { stopAuto(); setStep(current - 1); startAuto(); });
 
     cards.forEach(function(card, i) {
-        card.addEventListener('click', function() { setStep(i); });
+        card.addEventListener('click', function() { stopAuto(); setStep(i); startAuto(); });
     });
 
-    // Scroll per card + extra dwell after the last card
-    var vh = window.innerHeight;
-    var scrollPerCard = vh * 0.75;
-    var dwellAfterLast = vh * 1;
-    var totalScrollNeeded = (scrollPerCard * total) + dwellAfterLast;
-
-    function measure() {
-        vh = window.innerHeight;
-        scrollPerCard = vh * 0.75;
-        dwellAfterLast = vh * 1;
-        totalScrollNeeded = (scrollPerCard * total) + dwellAfterLast;
-        carousel.style.height = (vh + totalScrollNeeded) + 'px';
-    }
-
-    measure();
-
-    window.addEventListener('scroll', function() {
-        var rect = carousel.getBoundingClientRect();
-        var isSticky = rect.top <= 0 && rect.bottom > vh;
-
-        // Show/hide heading with carousel
-        if (heading) {
-            heading.classList.toggle('companies__heading--visible', isSticky);
-        }
-
-        if (rect.top > 0) {
-            setStep(0);
-            return;
-        }
-        var scrolled = -rect.top;
-        var step = Math.min(Math.floor(scrolled / scrollPerCard), total - 1);
-        setStep(step);
-    }, { passive: true });
-
-    window.addEventListener('resize', measure);
+    startAuto();
 })();
 
 /* Blocks dividers — faster parallax scroll (desktop only) */
