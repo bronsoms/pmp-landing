@@ -16,12 +16,14 @@
     });
 })();
 
-/* Mobile: replace <br> with spaces in hero tagline */
+/* Non-desktop: replace <br> with spaces in all headers/text */
 (function() {
-    if (window.innerWidth <= 900) {
-        var els = document.querySelectorAll('.hero__tagline, .khanvian__title');
+    if (window.innerWidth < 1024) {
+        var els = document.querySelectorAll('h1, h2, h3, p');
         els.forEach(function(el) {
-            el.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+            if (el.querySelector('br')) {
+                el.innerHTML = el.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+            }
         });
     }
 })();
@@ -211,38 +213,55 @@ function toggleMenu() {
 (function() {
     var cards = document.querySelectorAll('.stack-card');
     if (!cards.length) return;
-
     var total = cards.length;
     var current = 0;
     var interval;
-
-    function setStep(step) {
-        current = ((step % total) + total) % total;
-        cards.forEach(function(card, i) {
-            var pos = (i - current + total) % total;
-            if (pos === 0) {
-                card.setAttribute('data-state', 'active');
-            } else {
-                card.setAttribute('data-state', 'queued-' + Math.min(pos, 3));
-            }
-        });
-    }
-
-    function next() { setStep(current + 1); }
-    function startAuto() { interval = setInterval(next, 4000); }
-    function stopAuto() { clearInterval(interval); }
+    var isDesktop = window.innerWidth >= 1024;
 
     var btnPrev = document.getElementById('stackPrev');
     var btnNext = document.getElementById('stackNext');
+    var container = document.getElementById('stackCards');
 
-    if (btnNext) btnNext.addEventListener('click', function() { stopAuto(); setStep(current + 1); startAuto(); });
-    if (btnPrev) btnPrev.addEventListener('click', function() { stopAuto(); setStep(current - 1); startAuto(); });
+    if (isDesktop) {
+        /* Desktop: stack carousel with data-state */
+        function setStep(step) {
+            current = ((step % total) + total) % total;
+            cards.forEach(function(card, i) {
+                var pos = (i - current + total) % total;
+                if (pos === 0) {
+                    card.setAttribute('data-state', 'active');
+                } else {
+                    card.setAttribute('data-state', 'queued-' + Math.min(pos, 3));
+                }
+            });
+        }
 
-    cards.forEach(function(card, i) {
-        card.addEventListener('click', function() { stopAuto(); setStep(i); startAuto(); });
-    });
+        function next() { setStep(current + 1); }
+        function startAuto() { interval = setInterval(next, 15000); }
+        function stopAuto() { clearInterval(interval); }
 
-    startAuto();
+        if (btnNext) btnNext.addEventListener('click', function() { stopAuto(); setStep(current + 1); startAuto(); });
+        if (btnPrev) btnPrev.addEventListener('click', function() { stopAuto(); setStep(current - 1); startAuto(); });
+        cards.forEach(function(card, i) {
+            card.addEventListener('click', function() { stopAuto(); setStep(i); startAuto(); });
+        });
+        startAuto();
+    } else {
+        /* Non-desktop: horizontal scroll slider */
+        function scrollToCard(index) {
+            current = ((index % total) + total) % total;
+            var card = cards[current];
+            container.scrollTo({ left: card.offsetLeft - (container.offsetWidth - card.offsetWidth) / 2, behavior: 'smooth' });
+        }
+
+        function nextMobile() { scrollToCard(current + 1); }
+        function startAutoMobile() { interval = setInterval(nextMobile, 15000); }
+        function stopAutoMobile() { clearInterval(interval); }
+
+        if (btnNext) btnNext.addEventListener('click', function() { stopAutoMobile(); scrollToCard(current + 1); startAutoMobile(); });
+        if (btnPrev) btnPrev.addEventListener('click', function() { stopAutoMobile(); scrollToCard(current - 1); startAutoMobile(); });
+        startAutoMobile();
+    }
 })();
 
 /* Blocks dividers — faster parallax scroll (desktop only) */
@@ -279,19 +298,18 @@ function toggleMenu() {
     window.addEventListener('resize', updateStep);
 })();
 
-/* Factory textbox — top aligned with bottom of factory header */
+/* Factory textbox — centered vertically in visual */
 (function() {
-    if (window.innerWidth <= 900) return;
+    if (window.innerWidth < 1024) return;
     var visual = document.querySelector('.factory__visual');
-    var header = document.querySelector('.factory__header');
     var textbox = document.querySelector('.factory__textbox');
-    if (!visual || !header || !textbox) return;
+    if (!visual || !textbox) return;
 
     function position() {
-        var visualRect = visual.getBoundingClientRect();
-        var headerRect = header.getBoundingClientRect();
-        var headerBottom = headerRect.bottom - visualRect.top;
-        textbox.style.top = headerBottom + 'px';
+        var visualH = visual.offsetHeight;
+        var textboxH = textbox.offsetHeight;
+        var top = (visualH - textboxH) / 2;
+        textbox.style.top = Math.max(16, top) + 'px';
     }
 
     position();

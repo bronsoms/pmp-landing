@@ -1118,71 +1118,33 @@ section {
 /* ==========================================================================
    RESPONSIVE — Narrow desktop (≤1200px)
    ========================================================================== */
-@media (max-width: 1200px) {
-    /* --- Khanvian --- */
-    .khanvian__header {
-        width: 26%;
-    }
-    .khanvian__textbox {
-        width: 38vw;
-        padding: 2rem 4rem;
-    }
-
-    /* --- Factory --- */
-    .factory__header {
-        left: 3rem;
-        right: 3rem;
-    }
-    .factory__header-row {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 2rem;
-    }
-    .factory__logo { max-width: 300px; }
-    .factory__textbox {
-        clip-path: none;
-        padding: 2rem 2.5rem;
-        max-width: 420px;
-        position: static;
-        transform: none;
-    }
-    .factory__photo {
-        margin-top: 0;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-    }
-    .factory__visual {
-        min-height: 75vh;
-    }
-
-    /* --- Contact --- */
-    .contact__grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .contact__title { margin-left: 0; }
-}
-
 /* ==========================================================================
-   RESPONSIVE — Tablet & Mobile (≤999px)
-   ========================================================================== */
-@media (max-width: 999px) {
-    .nav__links { display: none; }
-    .nav__burger { display: flex; }
-    .footer { padding: 1.2rem 2rem; }
-    .footer__inner { flex-direction: column; gap: .75rem; text-align: center; }
-    .footer__cities { justify-content: center; }
-}
-
-/* ==========================================================================
-   RESPONSIVE — Tablet portrait & Mobile (≤820px)
-   No scroll effects, no sticky carousel, no diagonal lines, no clip-paths.
+   RESPONSIVE — Non-desktop (≤1023px)
+   No parallax, no sticky, no diagonal lines, no clip-paths.
    Clean vertical layout.
    ========================================================================== */
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
+    /* --- Global: remove parallax/sticky --- */
+    section {
+        position: relative;
+        height: auto;
+        overflow: visible;
+    }
+    section.hero {
+        position: sticky;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+
+    /* --- Page dots — hide --- */
+    .page-dots { display: none; }
+
     /* --- Nav --- */
     .nav { padding: 1rem 1.5rem; }
     .nav--scrolled { padding: .7rem 1.5rem; }
+    .nav__links { display: none; }
+    .nav__burger { display: flex; }
     .mmenu__close { right: 1.5rem; }
     .nav--dark .nav__logo-img { opacity: 0; pointer-events: none; }
 
@@ -1199,8 +1161,6 @@ section {
         text-align: center;
         margin-bottom: 1rem;
     }
-    .hero__tagline br { display: inline; font-size: 0; line-height: 0; }
-    .hero__tagline br::before { content: ' '; font-size: 1rem; }
     .hero__title {
         position: static;
         font-size: clamp(2rem, 8vw, 2.8rem);
@@ -1219,6 +1179,7 @@ section {
     .blocks-divider { display: none; }
 
     /* --- Intro --- */
+    .intro__blocks { display: none; }
     .intro { padding: 3rem 1.5rem 4rem; }
     .intro__inner { max-width: 100%; }
     .intro__text {
@@ -1239,21 +1200,45 @@ section {
         text-align: center;
     }
     .companies__title { text-align: center; }
-    .companies__title br { display: inline; font-size: 0; line-height: 0; }
-    .companies__title br::before { content: ' '; font-size: 1rem; }
-    .stack-carousel__cards {
-        width: 80vw;
-        max-width: 100%;
-        height: 50vh;
+    .stack-carousel {
+        width: 100%;
+        position: relative;
     }
+    .stack-carousel__cards {
+        display: flex;
+        gap: 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin-left: 0;
+    }
+    .stack-carousel__cards::-webkit-scrollbar { display: none; }
     .stack-card {
+        position: relative;
+        top: auto;
+        left: auto;
+        flex: 0 0 100%;
+        max-width: 100%;
+        height: auto;
+        scroll-snap-align: center;
         padding: 2rem 1.5rem;
         clip-path: none !important;
         filter: none;
+        opacity: 1 !important;
+        transform: none !important;
     }
-    .stack-card[data-state="queued-1"] { transform: translateX(40px) translateY(40px) scale(0.95); }
-    .stack-card[data-state="queued-2"] { transform: translateX(80px) translateY(80px) scale(0.90); }
-    .stack-card[data-state="queued-3"] { transform: translateX(120px) translateY(120px) scale(0.85); }
+    .stack-carousel__nav {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        z-index: 20;
+        pointer-events: auto;
+    }
     .stack-card__body { font-size: .95rem; }
 
     /* --- Khanvian --- */
@@ -1264,6 +1249,7 @@ section {
         width: 100%;
         padding: 2rem 1.5rem;
         text-align: center;
+        z-index: 4;
     }
     .khanvian__logo-main {
         margin: 0 auto 1.5rem;
@@ -1273,14 +1259,20 @@ section {
     }
     .khanvian__visual {
         position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    .khanvian__photo {
+        order: 1;
     }
     .khanvian__overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
+        top: auto;
+        left: auto;
         right: auto;
-        margin: 0;
+        bottom: auto;
+        transform: none;
+        margin: 0 auto;
         width: 90%;
         max-width: 500px;
         padding: 0;
@@ -1297,6 +1289,7 @@ section {
     .factory__visual {
         display: flex;
         flex-direction: column;
+        position: relative;
         overflow: visible;
         min-height: auto;
     }
@@ -1313,6 +1306,7 @@ section {
     .factory__photo {
         position: static;
         order: 1;
+        z-index: 1;
     }
     .factory__header-row {
         flex-direction: column;
@@ -1323,13 +1317,20 @@ section {
     .factory__textbox {
         clip-path: none;
         padding: 2rem 1.5rem;
-        max-width: 100%;
+        width: 90%;
+        max-width: 500px;
         text-align: center;
-        margin: 0 auto;
-        position: static;
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
         transform: none;
+        z-index: 3;
+        margin: 0 auto;
+        order: 0;
     }
     .factory__lime-line { width: 100%; }
+    .factory__blocks { display: none; }
     .factory__blocks-strip { display: none; }
 
     /* --- Contact --- */
@@ -1346,4 +1347,6 @@ section {
 
     /* --- Footer --- */
     .footer { padding: 1rem 1.5rem; }
+    .footer__inner { flex-direction: column; gap: .75rem; text-align: center; }
+    .footer__cities { justify-content: center; }
 }
