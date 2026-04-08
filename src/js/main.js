@@ -1,3 +1,21 @@
+/* Page dots — JS scroll to handle sticky sections */
+(function() {
+    var dots = document.querySelectorAll('.page-dot[href^="#"]');
+    dots.forEach(function(dot) {
+        dot.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = dot.getAttribute('href').slice(1);
+            var sections = document.querySelectorAll('section');
+            var scrollTarget = 0;
+            for (var i = 0; i < sections.length; i++) {
+                if (sections[i].id === id) break;
+                scrollTarget += sections[i].offsetHeight;
+            }
+            window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        });
+    });
+})();
+
 /* Mobile: replace <br> with spaces in hero tagline */
 (function() {
     if (window.innerWidth <= 900) {
@@ -18,15 +36,20 @@
     var sections = document.querySelectorAll('section');
     if (!nav) return;
 
+    var factory = document.getElementById('factoria');
+
     window.addEventListener('scroll', function() {
         nav.classList.toggle('nav--scrolled', window.scrollY > 60);
         if (intro) {
             var introTop = intro.getBoundingClientRect().top;
             var pastHero = introTop <= 100;
+            var onFactory = factory && factory.getBoundingClientRect().top <= 100;
             var onContact = contact && contact.getBoundingClientRect().top <= 100;
             nav.classList.toggle('nav--dark', pastHero && !onContact);
             nav.classList.toggle('nav--light', onContact);
             nav.classList.toggle('nav--hidden', onContact);
+            // Keep nav logo visible over factory by raising it
+            nav.classList.toggle('nav--over-factory', onFactory && !onContact);
             if (dotsContainer) dotsContainer.classList.toggle('page-dots--visible', pastHero && !onContact);
         }
 
@@ -237,6 +260,77 @@ function toggleMenu() {
             el.style.transform = 'translate3d(0,' + offset + 'px,0)';
         });
     }, { passive: true });
+})();
+
+/* Stack card offset — adapt vertical spacing to viewport height */
+(function() {
+    if (window.innerWidth <= 900) return;
+    var carousel = document.getElementById('stackCarousel');
+    if (!carousel) return;
+
+    function updateStep() {
+        var vh = window.innerHeight;
+        // Base 100px at 800px vh, scale proportionally, min 60px
+        var step = Math.max(60, Math.round(vh * 0.13));
+        carousel.style.setProperty('--stack-step', step + 'px');
+    }
+
+    updateStep();
+    window.addEventListener('resize', updateStep);
+})();
+
+/* Factory textbox — top aligned with bottom of factory header */
+(function() {
+    if (window.innerWidth <= 900) return;
+    var visual = document.querySelector('.factory__visual');
+    var header = document.querySelector('.factory__header');
+    var textbox = document.querySelector('.factory__textbox');
+    if (!visual || !header || !textbox) return;
+
+    function position() {
+        var visualRect = visual.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerBottom = headerRect.bottom - visualRect.top;
+        textbox.style.top = headerBottom + 'px';
+    }
+
+    position();
+    window.addEventListener('resize', position);
+    window.addEventListener('load', position);
+})();
+
+/* Khanvian video lightbox */
+(function() {
+    var lightbox = document.getElementById('khanvianLightbox');
+    var iframe = document.getElementById('khanvianIframe');
+    var closeBtn = document.getElementById('lightboxClose');
+    if (!lightbox || !iframe) return;
+
+    var vimeoUrl = 'https://player.vimeo.com/video/1100597686?autoplay=1';
+
+    var triggers = document.querySelectorAll('.khanvian__video-trigger');
+    triggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            iframe.src = vimeoUrl;
+            lightbox.classList.add('lightbox--open');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove('lightbox--open');
+        iframe.src = '';
+        document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('lightbox--open')) closeLightbox();
+    });
 })();
 
 /* Hide hero bg when scrolled past hero (desktop only) */

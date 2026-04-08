@@ -1,14 +1,16 @@
 <section class="khanvian" id="khanvian">
     <div class="diagonal-segment" aria-hidden="true"><svg><line stroke="#E4FE00" stroke-width="5"/></svg></div>
     <div class="khanvian__header">
-        <img src="{{ '/assets/logo-khanvian.svg' | url }}" alt="Khanvian" class="khanvian__logo-main sr">
+        <a href="#" class="khanvian__video-trigger" aria-label="Ver vídeo Khanvian">
+            <img src="{{ '/assets/logo-khanvian.svg' | url }}" alt="Khanvian" class="khanvian__logo-main sr">
+        </a>
         <h2 class="khanvian__title sr sr--d1">el sistema<br>constructivo<br>inédito y<br>patentado del<br>Grup PMP.</h2>
     </div>
     <div class="khanvian__visual">
         <img src="{{ '/assets/khanvian-bg.png' | url }}" alt="Sistema constructivo Khanvian" loading="lazy" class="khanvian__photo">
         <div class="khanvian__overlay sr sr--d2">
             <div class="khanvian__textbox">
-                <p class="khanvian__text">Khanvian&reg; es construir hoy como se construirá mañana. Un revolucionario sistema constructivo que permite ahorrar tiempo y costes y aumentar drásticamente la calidad, mediante la utilización de elementos industrializados de fácil ensamblaje y simplificando al máximo las tareas en la ubicación final.</p>
+                <p class="khanvian__text"><a href="#" class="khanvian__video-trigger khanvian__text-link">Khanvian&reg;</a> es construir hoy como se construirá mañana. Un revolucionario sistema constructivo que permite ahorrar tiempo y costes y aumentar drásticamente la calidad, mediante la utilización de elementos industrializados de fácil ensamblaje y simplificando al máximo las tareas en la ubicación final.</p>
             </div>
         </div>
         <div class="khanvian__blocks-divider sr sr--d3">
@@ -16,3 +18,13 @@
         </div>
     </div>
 </section>
+
+<!-- Khanvian video lightbox -->
+<div class="lightbox" id="khanvianLightbox">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+    <div class="lightbox__content">
+        <div class="lightbox__video">
+            <iframe id="khanvianIframe" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
