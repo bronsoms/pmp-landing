@@ -118,23 +118,13 @@ img { display: block; max-width: 100%; height: auto; }
 ::selection { background: var(--c-lime); color: var(--c-dark-text); }
 
 section {
-    height: 100vh;
-    overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 
 /* Page navigation dots */
 .page-dots {
-    position: fixed;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    z-index: 101;
-    opacity: 0;
-    transition: opacity .4s ease;
-    pointer-events: none;
+    display: none;
 }
 .page-dots--visible {
     opacity: 1;
@@ -181,11 +171,6 @@ section {
     opacity: 1;
 }
 
-/* Parallax stacking */
-section {
-    position: sticky;
-    top: 0;
-}
 
 
 /* ==========================================================================
@@ -207,18 +192,15 @@ section {
     transition: filter .4s ease;
 }
 
+.nav--dark {
+    background: var(--c-gray-bg);
+}
 .nav--dark .nav__logo-img {
     filter: brightness(0);
 }
 .nav--hidden {
     opacity: 0;
     pointer-events: none;
-}
-.nav--over-factory {
-    background: var(--c-gray-bg);
-}
-.nav--over-factory .nav__logo-img {
-    filter: brightness(0);
 }
 .nav__links { display: flex; gap: 2.2rem; list-style: none; }
 .nav__links a {
@@ -299,6 +281,7 @@ section {
     inset: 0;
     pointer-events: none;
     z-index: 0;
+    overflow: visible;
 }
 
 .factory .diagonal-segment {
@@ -306,7 +289,7 @@ section {
 }
 
 .contact .diagonal-segment {
-    bottom: -100vh;
+    bottom: 0;
 }
 
 .diagonal-segment svg {
@@ -329,7 +312,7 @@ section {
 
 .hero__tagline {
     position: absolute;
-    right: var(--diag-tagline-right, 55%);
+    right: var(--diag-tagline-right, 58%);
     top: 40%;
     font-family: var(--f-display);
     font-weight: 600;
@@ -342,7 +325,7 @@ section {
 
 .hero__title {
     position: absolute;
-    left: var(--diag-title-left, 48%);
+    left: var(--diag-title-left, 52%);
     top: 48%;
     font-family: 'Atrament', var(--f-display);
     font-weight: 400;
@@ -413,11 +396,10 @@ section {
    ========================================================================== */
 .intro {
     background: var(--c-gray-bg);
-    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 8rem;
+    padding: 6rem 8rem;
     overflow: visible;
 }
 
@@ -454,15 +436,13 @@ section {
    ========================================================================== */
 .companies {
     background: var(--c-gray-bg);
-    z-index: 3;
-    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
 }
 
 .companies__layout {
     display: flex;
     align-items: flex-start;
-    height: 100%;
     padding: 3rem 2rem 2rem;
+    overflow: visible;
 }
 
 .companies__heading {
@@ -496,6 +476,7 @@ section {
     height: 60vh;
     max-height: 500px;
     margin-left: 4vw;
+    margin-bottom: calc(var(--stack-step, 100px) * 3);
 }
 
 /* Individual card */
@@ -510,6 +491,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
     transition: transform .6s cubic-bezier(.4, 0, 0, 1),
                 opacity .5s cubic-bezier(.4, 0, 0, 1);
     will-change: transform, opacity;
@@ -621,8 +603,7 @@ section {
    ========================================================================== */
 .khanvian {
     background: var(--c-gray-bg);
-    z-index: 4;
-    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
+    min-height: 80vh;
 }
 
 .khanvian__header {
@@ -692,6 +673,7 @@ section {
     align-items: center;
     justify-content: center;
     padding: 3rem 6rem;
+    clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
 }
 
 .khanvian__text {
@@ -786,11 +768,7 @@ section {
    ========================================================================== */
 .factory {
     background: var(--c-gray-bg);
-    z-index: 5;
-    box-shadow: 0 -15px 40px rgba(0, 0, 0, .06);
     overflow: visible;
-    position: relative;
-    height: auto;
 }
 
 .factory__blocks {
@@ -805,10 +783,10 @@ section {
 }
 
 .factory__header {
-    position: absolute;
-    top: 5rem;
-    left: 3.5rem;
+    position: relative;
+    padding: 5rem 0 0 3.5rem;
     z-index: 3;
+    order: 1;
 }
 
 .factory__header-row {
@@ -849,17 +827,16 @@ section {
 
 .factory__visual {
     position: relative;
-    overflow: hidden;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .factory__photo {
     width: 100%;
     display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: relative;
     z-index: 1;
+    order: 3;
 }
 
 .factory__overlay-content {
@@ -874,11 +851,11 @@ section {
     clip-path: polygon(9% 0%, 100% 0%, 91% 100%, 0% 100%);
     padding: 4rem 6rem;
     max-width: 560px;
-    position: absolute;
-    right: auto;
-    left: 50%;
+    position: relative;
     z-index: 3;
-    /* top set by JS to align bottom with photo top */
+    margin-left: 50%;
+    margin-top: 2rem;
+    order: 2;
 }
 
 .factory__text {
@@ -929,10 +906,7 @@ section {
 .contact {
     background: var(--c-dark);
     padding: 15rem 3.5rem 8rem;
-    z-index: 6;
     overflow: hidden;
-    position: relative;
-    height: auto;
 }
 
 .contact__grid {
@@ -1037,7 +1011,6 @@ section {
     background: var(--c-dark);
     padding: 1.5rem 3.5rem;
     position: relative;
-    z-index: 7;
 }
 
 .footer__inner {
@@ -1124,18 +1097,6 @@ section {
    Clean vertical layout.
    ========================================================================== */
 @media (max-width: 1023px) {
-    /* --- Global: remove parallax/sticky --- */
-    section {
-        position: relative;
-        height: auto;
-        overflow: visible;
-    }
-    section.hero {
-        position: sticky;
-        height: 100vh;
-        overflow: hidden;
-    }
-
 
     /* --- Page dots — hide --- */
     .page-dots { display: none; }
@@ -1214,6 +1175,7 @@ section {
         max-width: 100%;
         height: auto;
         margin-left: 0;
+        margin-bottom: 0;
     }
     .stack-carousel__cards::-webkit-scrollbar { display: none; }
     .stack-card {
