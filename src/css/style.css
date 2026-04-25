@@ -667,12 +667,12 @@ section {
 
 .khanvian__textbox {
     background: rgba(42, 46, 52, .7);
-    width: 42vw;
+    width: min(34vw, 620px);
     aspect-ratio: 627 / 374;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem 6rem;
+    padding: 3rem 5rem;
     clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
 }
 
@@ -683,7 +683,7 @@ section {
     line-height: 22px;
     color: var(--c-lime);
     word-wrap: break-word;
-    max-width: 320px;
+    max-width: 480px;
 }
 
 .khanvian__blocks-divider {
